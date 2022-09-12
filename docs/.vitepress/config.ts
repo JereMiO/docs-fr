@@ -1,6 +1,6 @@
 import { defineConfig, DefaultTheme } from 'vitepress'
 
-const ogDescription = 'Next Generation Frontend Tooling'
+const ogDescription = 'Le tooling frontend nouvelle génération'
 const ogImage = 'https://vitejs.dev/og-image.png'
 const ogTitle = 'Vite'
 const ogUrl = 'https://vitejs.dev'
@@ -102,9 +102,9 @@ export default defineConfig({
     },
 
     localeLinks: {
-      text: 'English',
+      text: 'Français',
       items: [
-        { text: 'English', link: 'https://main.vitejs.dev' },
+        { text: 'English', link: 'https://vitejs.dev' },
         { text: '简体中文', link: 'https://cn.vitejs.dev' },
         { text: '日本語', link: 'https://ja.vitejs.dev' },
         { text: 'Español', link: 'https://es.vitejs.dev' }
@@ -123,7 +123,7 @@ export default defineConfig({
       {
         text: 'Ressources',
         items: [
-          { text: 'Team', link: '/team' },
+          { text: 'Équipe', link: '/team' },
           {
             items: [
               {
@@ -247,38 +247,38 @@ export default defineConfig({
       ],
       '/config/': [
         {
-          text: 'Config',
+          text: 'Configuration',
           items: [
             {
-              text: 'Configuring Vite',
+              text: 'Configurer Vite',
               link: '/config/'
             },
             {
-              text: 'Shared Options',
+              text: 'Options communes',
               link: '/config/shared-options'
             },
             {
-              text: 'Server Options',
+              text: 'Options du serveur',
               link: '/config/server-options'
             },
             {
-              text: 'Build Options',
+              text: 'Options de compilation',
               link: '/config/build-options'
             },
             {
-              text: 'Preview Options',
+              text: 'Options de l’aperçu (preview)',
               link: '/config/preview-options'
             },
             {
-              text: 'Dep Optimization Options',
+              text: 'Options d’optimisation des dépendances',
               link: '/config/dep-optimization-options'
             },
             {
-              text: 'SSR Options',
+              text: 'Options de rendu côté serveur (SSR)',
               link: '/config/ssr-options'
             },
             {
-              text: 'Worker Options',
+              text: 'Options du worker',
               link: '/config/worker-options'
             }
           ]
