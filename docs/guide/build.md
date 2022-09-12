@@ -127,7 +127,7 @@ const { defineConfig } = require('vite')
 module.exports = defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'lib/main.js'),
+      entry: resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
       // les extensions nécessaires seront ajoutées
       fileName: 'my-lib'
