@@ -60,7 +60,6 @@ const sponsors = computed(() => {
 .viteconf:hover img {
   transform: scale(1.75);
 }
-
 .viteconf:hover .heading {
   background-image: linear-gradient(
     120deg,
@@ -72,7 +71,6 @@ const sponsors = computed(() => {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .viteconf .extra-info {
   color: var(--vp-c-text-1);
   opacity: 0;
