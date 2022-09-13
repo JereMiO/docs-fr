@@ -16,14 +16,14 @@ jobs:
           access-token: ${{ secrets.ACCESS_TOKEN }}
 
           # Git user name to use when making issues and PRs. Required.
-          username: baguette-bot
+          username: vite/vitejs
 
           # Git email address to use when making issues and PRs. Required.
-          email: "baguette-bot@gmx.fr"
+          email: "jcotiniaux@gmail.com"
 
           # The url for the upstream repo. This is the repository that you
           # set up Ryu-Cho. Required.
-          upstream-repo: https://github.com/soetz/vite-docs-fr.git
+          upstream-repo: https://github.com/Jeremio/docs-fr.git
 
           # The branch for the upstream repo. Optional. Defaults to `main`.
           upstream-repo-branch: main
@@ -37,7 +37,7 @@ jobs:
 
           # The git commit sha of head repo to start tracking. Ryu-Cho will
           # only track commit from this hash. Required.
-          track-from: a0126441a556b4991ac14cf037820194ab9e17b9
+          track-from: b1ad82def57f1e07233d5011489900bb38a8fe6b
 
           # File path to track. In this example, Ryu-Cho will only track
           # commits that modified files under `docs` folder. Optional.
