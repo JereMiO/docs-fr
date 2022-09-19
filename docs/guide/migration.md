@@ -6,7 +6,7 @@ Vite ne supporte plus Node v12, qui est arrivé à la fin de sa vie. Node ⩾ 14
 
 ## Changement de la définition de navigateur moderne
 
-Le bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [modules ES natifs](https://caniuse.com/es6-module), l'[import dynamique de modules ES natif](https://caniuse.com/es6-module-dynamic-import) et [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta) :
+Le bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [modules ES natifs](https://caniuse.com/es6-module), l'[import dynamique de modules ES natif](https://caniuse.com/es6-module-dynamic-import) et [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta):
 
 - Chrome ⩾ 87
 - Firefox ⩾ 78
@@ -17,7 +17,7 @@ Une petite partie des utilisateurs devra maintenant utiliser [@vitejs/plugin-leg
 
 ## Modifications d’options de configuration
 
-Les options suivantes qui étaient déjà dépréciées en v2 ont été retirées :
+Les options suivantes qui étaient déjà dépréciées en v2 ont été retirées:
 
 - `alias` (qui est devenue [`resolve.alias`](../config/#resolve-alias))
 - `dedupe` (qui est devenue [`resolve.dedupe`](../config/#resolve-dedupe))
@@ -59,10 +59,10 @@ npm add -D terser
 - Les clés de `import.meta.glob` sont désormais relatives au module actuel.
 
   ```diff
-  // fichier : /foo/index.js
+  // fichier: /foo/index.js
   const modules = import.meta.glob('../foo/*.js')
 
-  // transformé :
+  // transformé:
   const modules = {
   -  '../foo/bar.js': () => {}
   +  './bar.js': () => {}

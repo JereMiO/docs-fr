@@ -1,11 +1,11 @@
 # Gestion des ressources statiques
 
-- Voir aussi : [Chemin public de base](./build#chemin-public-de-base)
-- Voir aussi : [option de configuration `assetsInclude`](/config/#assetsinclude)
+- Voir aussi: [Chemin public de base](./build#chemin-public-de-base)
+- Voir aussi: [option de configuration `assetsInclude`](/config/#assetsinclude)
 
 ## Importer une ressource en tant qu’URL
 
-Importer une ressource statique retournera l’URL publique résolue où elle est servie :
+Importer une ressource statique retournera l’URL publique résolue où elle est servie:
 
 ```js
 import imgUrl from './img.png'
@@ -68,7 +68,7 @@ Lisez la [section Web workers](features.md#web-workers) pour plus de détails.
 
 ## Le répertoire `public`
 
-Si vous avez des ressources :
+Si vous avez des ressources:
 
 - qui ne sont jamais référencées dans le code source (par exemple `robots.txt`),
 - qui doivent garder exactement le même nom de fichier (sans hachage),
@@ -78,14 +78,14 @@ alors vous pouvez les placer dans le répertoire spécial `public` à la racine 
 
 Le répertoire par défaut est `<racine>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
 
-Notez que :
+Notez que:
 
 - Vous devriez toujours référencer les ressources de `public` avec des chemins absolus. Par exemple, `public/icon.png` devrait être référencé dans le code source en tant que `/icon.png`.
 - Les ressources de `public` ne peuvent pas être importées dans le JavaScript.
 
 ## new URL(url, import.meta.url)
 
-[import.meta.url](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/import.meta) est une fonctionnalité native des modules ES qui expose l’URL du module courant. En la combinant avec le [constructeur de l’interface URL](https://developer.mozilla.org/fr/docs/Web/API/URL) native, on peut obtenir l’URL complète et résolue d’une ressource statique en utilisant un chemin relatif depuis un module JavaScript :
+[import.meta.url](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/import.meta) est une fonctionnalité native des modules ES qui expose l’URL du module courant. En la combinant avec le [constructeur de l’interface URL](https://developer.mozilla.org/fr/docs/Web/API/URL) native, on peut obtenir l’URL complète et résolue d’une ressource statique en utilisant un chemin relatif depuis un module JavaScript:
 
 ```js
 const imgUrl = new URL('./img.png', import.meta.url).href
@@ -93,9 +93,9 @@ const imgUrl = new URL('./img.png', import.meta.url).href
 document.getElementById('hero-img').src = imgUrl
 ```
 
-Cela fonctionne nativement avec les navigateurs modernes — en fait, Vite n’a pas du tout besoin de traiter ce code pour le développement !
+Cela fonctionne nativement avec les navigateurs modernes —en fait, Vite n’a pas du tout besoin de traiter ce code pour le développement!
 
-Ce pattern fonctionne aussi avec une URL dynamique usant d’un gabarit de texte (_template literal_) :
+Ce pattern fonctionne aussi avec une URL dynamique usant d’un gabarit de texte (_template literal_):
 
 ```js
 function getImageUrl(name) {

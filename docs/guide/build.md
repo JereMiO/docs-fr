@@ -4,7 +4,7 @@ Lorsqu’il est temps de déployer votre application en production, lancez simpl
 
 ## Compatibilité navigateur
 
-Ce bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [modules ES natifs](https://caniuse.com/es6-module), les [imports dynamiques de modules ES natifs](https://caniuse.com/es6-module-dynamic-import) et [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta) :
+Ce bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [modules ES natifs](https://caniuse.com/es6-module), les [imports dynamiques de modules ES natifs](https://caniuse.com/es6-module-dynamic-import) et [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta):
 
 - Chrome ⩾ 87
 - Firefox ⩾ 78
@@ -19,7 +19,7 @@ Les navigateurs plus anciens peuvent être supportés à l’aide de [@vitejs/pl
 
 ## Chemin public de base
 
-- Voir aussi : [Gestion des ressources statiques](./assets)
+- Voir aussi: [Gestion des ressources statiques](./assets)
 
 Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l’[option de configuration `base`](/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l’interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
 
@@ -29,7 +29,7 @@ La seule exception est quand vous devez concaténer dynamiquement des URLs à la
 
 ## Customiser la compilation
 
-La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions`:
 
 ```js
 // vite.config.js
@@ -46,7 +46,7 @@ Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l’aide de plug
 
 ## Stratégie de découpage en morceaux (_chunks_)
 
-Vous pouvez configurer la façon dont sont découpés les morceaux à l’aide de `build.rollupOptions.output.manualChunks` (voir la [documentation de Rollup](https://rollupjs.org/guide/en/#outputmanualchunks)). Jusqu’à Vite 2.8, la stratégie de découpage des morceaux par défaut séparait les morceaux entre `index` et `vendor`. C’est une bonne stratégie la plupart du temps pour les applications monopages (_SPAs_), mais il est difficile de fournir une solution appropriée à chaque cas d’usage de Vite. À partir de Vite 2.9, `manualChunks` n’est plus modifiée par défaut. Vous pouvez toujours utiliser l’ancienne stratégie en ajoutant le `splitVendorChunkPlugin` dans votre fichier de configuration :
+Vous pouvez configurer la façon dont sont découpés les morceaux à l’aide de `build.rollupOptions.output.manualChunks` (voir la [documentation de Rollup](https://rollupjs.org/guide/en/#outputmanualchunks)). Jusqu’à Vite 2.8, la stratégie de découpage des morceaux par défaut séparait les morceaux entre `index` et `vendor`. C’est une bonne stratégie la plupart du temps pour les applications monopages (_SPAs_), mais il est difficile de fournir une solution appropriée à chaque cas d’usage de Vite. À partir de Vite 2.9, `manualChunks` n’est plus modifiée par défaut. Vous pouvez toujours utiliser l’ancienne stratégie en ajoutant le `splitVendorChunkPlugin` dans votre fichier de configuration:
 
 ```js
 // vite.config.js
@@ -60,7 +60,7 @@ Cette stratégie est aussi fournie sous la forme d’une fonction fabrique (_fac
 
 ## Refaire la compilation lorsque les fichiers sont modifiés
 
-Vous pouvez activer le watcher Rollup avec `vite build --watch`. Ou alors vous pouvez directement ajuster les [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options) dans `build.watch` :
+Vous pouvez activer le watcher Rollup avec `vite build --watch`. Ou alors vous pouvez directement ajuster les [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options) dans `build.watch`:
 
 ```js
 // vite.config.js
@@ -77,7 +77,7 @@ Avec le signal `--watch`, les changements faits à `vite.config.js` ou à n’im
 
 ## Application multi-pages
 
-Supposons que votre code source a la structure suivante :
+Supposons que votre code source a la structure suivante:
 
 ```
 ├── package.json
@@ -89,9 +89,9 @@ Supposons que votre code source a la structure suivante :
     └── nested.js
 ```
 
-Pendant la développement, naviguez à `/nested/` — cela fonctionne comme attendu, du moins dans le contexte d’un serveur de fichiers statiques.
+Pendant la développement, naviguez à `/nested/` —cela fonctionne comme attendu, du moins dans le contexte d’un serveur de fichiers statiques.
 
-Pour la compilation, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d’entrée :
+Pour la compilation, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d’entrée:
 
 ```js
 // vite.config.js
@@ -116,7 +116,7 @@ Si vous spécifiez une racine différente, souvenez-vous que `__dirname` sera to
 
 Lorsque vous développerez une librairie à destination du navigateur, vous passerez sûrement une bonne partie de votre temps sur une page de démo ou de test qui importe votre librairie. Avec Vite, vous pouvez utiliser le `index.html` pour cela, et profiter d’une meilleure expérience de développement.
 
-Lorsqu’il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l’[option de configuration `build.lib`](/config/#build-lib). Assurez vous d’externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple :
+Lorsqu’il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l’[option de configuration `build.lib`](/config/#build-lib). Assurez vous d’externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple:
 
 
 ```js
@@ -148,7 +148,7 @@ module.exports = defineConfig({
 })
 ```
 
-Le fichier d’entrée doit contenir les exports qui seront importés par les utilisateurs de votre package :
+Le fichier d’entrée doit contenir les exports qui seront importés par les utilisateurs de votre package:
 
 ```js
 // lib/main.js
@@ -157,7 +157,7 @@ import Bar from './Bar.vue'
 export { Foo, Bar }
 ```
 
-Lancer `vite build` avec cette configuration exploite un preset de Rollup qui est fait pour livrer des librairies et qui produit des bundles sous deux formats : `es` et `umd` (configurables avec `build.lib`) :
+Lancer `vite build` avec cette configuration exploite un preset de Rollup qui est fait pour livrer des librairies et qui produit des bundles sous deux formats: `es` et `umd` (configurables avec `build.lib`):
 
 ```
 $ vite build
@@ -166,7 +166,7 @@ building for production...
 [write] my-lib.umd.js 0.30kb, brotli: 0.16kb
 ```
 
-Le `package.json` recommandé pour votre librairie :
+Le `package.json` recommandé pour votre librairie:
 
 ```json
 {
@@ -186,10 +186,10 @@ Le `package.json` recommandé pour votre librairie :
 ## Options avancées du chemin de base
 
 ::: warning Expérimental
-Cette fonctionnalité est expérimentale ; l’API pourra très bien changer dans une future version mineure sans suivre le SemVer. Fixez la version mineure de Vite si vous l’utilisez.
+Cette fonctionnalité est expérimentale; l’API pourra très bien changer dans une future version mineure sans suivre le SemVer. Fixez la version mineure de Vite si vous l’utilisez.
 :::
 
-Pour les cas d’usage avancés, les ressources déployées et les fichiers publics pourraient se trouver sous des chemins différents, par exemple pour utiliser différentes stratégies de cache :
+Pour les cas d’usage avancés, les ressources déployées et les fichiers publics pourraient se trouver sous des chemins différents, par exemple pour utiliser différentes stratégies de cache:
 
 - Les fichiers HTML d’entrée générés (qui peuvent aussi être traités par le rendu côté serveur)
 - Les ressources hachées générées (JS, CSS, et les autres types de fichier comme les images)

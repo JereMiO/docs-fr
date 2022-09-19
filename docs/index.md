@@ -16,7 +16,7 @@ hero:
     text: Démarrer
     link: /guide/
   - theme: alt
-    text: Pourquoi utiliser Vite ?
+    text: Pourquoi utiliser Vite?
     link: /guide/why
   - theme: alt
     text: Voir sur GitHub
@@ -25,7 +25,7 @@ hero:
 features:
   - icon: 💡
     title: Démarrage instantané du serveur
-    details: Les fichiers sont servis instantanément sous la forme de modules ESM ! Il n’y a pas besoin de compiler.
+    details: Les fichiers sont servis instantanément sous la forme de modules ESM! Il n’y a pas besoin de compiler.
   - icon: ⚡️
     title: Rafraîchissement des modules ultra rapide
     details: Pendant le développement, les modules sont remplacés rapidement peu importe la taille de l’app.

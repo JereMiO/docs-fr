@@ -4,13 +4,13 @@ Les APIs JavaScript de Vite sont complétement typées, et il est recommandé d�
 
 ## `createServer`
 
-**Signature de type :**
+**Signature de type:**
 
 ```ts
 async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 ```
 
-**Exemple d’utilisation :**
+**Exemple d’utilisation:**
 
 ```js
 const { createServer } = require('vite')
@@ -33,10 +33,10 @@ const { createServer } = require('vite')
 
 ## `InlineConfig`
 
-L’interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires :
+L’interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires:
 
-- `configFile` : spécifie le fichier de configuration à utiliser. S’il n’est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
-- `envFile` : définissez-la à `false` pour désactiver la prise en charge des fichiers `.env`.
+- `configFile`: spécifie le fichier de configuration à utiliser. S’il n’est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
+- `envFile`: définissez-la à `false` pour désactiver la prise en charge des fichiers `.env`.
 
 ## `ViteDevServer`
 
@@ -125,7 +125,7 @@ interface ViteDevServer {
 
 ## `build`
 
-**Signature de type :**
+**Signature de type:**
 
 ```ts
 async function build(
@@ -133,7 +133,7 @@ async function build(
 ): Promise<RollupOutput | RollupOutput[]>
 ```
 
-**Exemple d’utilisation :**
+**Exemple d’utilisation:**
 
 ```js
 const path = require('path')
@@ -156,13 +156,13 @@ const { build } = require('vite')
 
 **Expérimental**
 
-**Signature de type :**
+**Signature de type:**
 
 ```ts
 async function preview(inlineConfig?: InlineConfig): Promise<PreviewServer>
 ```
 
-**Exemple d’utilisation :**
+**Exemple d’utilisation:**
 
 ```js
 const { preview } = require('vite')
@@ -183,7 +183,7 @@ const { preview } = require('vite')
 
 ## `resolveConfig`
 
-**Signature de type :**
+**Signature de type:**
 
 ```ts
 async function resolveConfig(
@@ -197,7 +197,7 @@ La valeur de `command` est `serve` en développement (dans l’interface en lign
 
 ## `transformWithEsbuild`
 
-**Signature de type :**
+**Signature de type:**
 
 ```ts
 async function transformWithEsbuild(

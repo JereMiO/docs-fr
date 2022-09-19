@@ -26,7 +26,7 @@ Allez voir la page [Utiliser des plugins](../guide/using-plugins.md) pour savoir
 
 ## Plugins de la communauté
 
-Allez voir du côté d’[awesome-vite](https://github.com/vitejs/awesome-vite#plugins) – vous pouvez également faire une PR pour ajouter vos plugins à la liste.
+Allez voir du côté d’[awesome-vite](https://github.com/vitejs/awesome-vite#plugins) –vous pouvez également faire une PR pour ajouter vos plugins à la liste.
 
 ## Plugins Rollup
 

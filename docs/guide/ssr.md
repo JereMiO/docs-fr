@@ -5,7 +5,7 @@ Le support du rendu côté serveur est toujours expérimental et vous risquez de
 :::
 
 :::tip Note
-Le rendu côté serveur fait référence aux frameworks front-end (par exemple React, Preact, Vue ou Svelte) qui supportent le fait d’exécuter l’application dans Node.js, qui génére un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
+Le rendu côté serveur fait référence aux frameworks front-end (par exemple React, Preact, Vue ou Svelte) qui supportent le fait d’exécuter l’application dans Node.js, qui génére un pré-rendu en HTML, et qui l’«hydratent» côté client en bout de course. Si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
 
 Le guide qui suit part également du principe que vous avez déjà un peu d’expérience avec le rendu côté serveur du framework de votre choix, et ne se concentre que sur les détails d’intégration spécifiques à Vite.
 :::
@@ -20,14 +20,14 @@ Si vous avez des questions, le [Discord de Vite a un channel #ssr](https://disco
 
 ## Exemples de projets
 
-Vite intègre le support du rendu côté serveur (_SSR_). Le playground de Vite propose des exemples de configurations de rendu côté serveur pour Vue 3 et React, qui peuvent servir de référence pour ce guide :
+Vite intègre le support du rendu côté serveur (_SSR_). Le playground de Vite propose des exemples de configurations de rendu côté serveur pour Vue 3 et React, qui peuvent servir de référence pour ce guide:
 
 - [Vue 3](https://github.com/vitejs/vite/tree/main/playground/ssr-vue)
 - [React](https://github.com/vitejs/vite/tree/main/playground/ssr-react)
 
 ## Structure de la source
 
-Une application reposant sur le rendu côté serveur aura typiquement la structure de fichiers suivante :
+Une application reposant sur le rendu côté serveur aura typiquement la structure de fichiers suivante:
 
 ```
 - index.html
@@ -40,7 +40,7 @@ Une application reposant sur le rendu côté serveur aura typiquement la structu
                     # de rendu côté serveur du framework
 ```
 
-L’`index.html` devra référencer `entry-client.js` et inclure un placeholder là où les balises rendues côté serveur devront être insérées :
+L’`index.html` devra référencer `entry-client.js` et inclure un placeholder là où les balises rendues côté serveur devront être insérées:
 
 ```html
 <div id="app"><!--ssr-outlet--></div>
@@ -63,7 +63,7 @@ Cette variable est remplacée statiquement lors de la compilation, ce qui signif
 
 ## Paramétrer le serveur de développement
 
-Lorsque vous développez une application reposant sur le rendu côté serveur, il est probable que vous souhaitiez garder le contrôle complet sur votre serveur principal et découpler Vite de l’environnement de production. Il est donc recommandé d’utiliser Vite en mode middleware. Voici un exemple avec [express](https://expressjs.com/) :
+Lorsque vous développez une application reposant sur le rendu côté serveur, il est probable que vous souhaitiez garder le contrôle complet sur votre serveur principal et découpler Vite de l’environnement de production. Il est donc recommandé d’utiliser Vite en mode middleware. Voici un exemple avec [express](https://expressjs.com/):
 
 **server.js**
 
@@ -101,7 +101,7 @@ createServer()
 
 Ici, `vite` est une instance de [ViteDevServer](./api-javascript#vitedevserver). `vite.middlewares` est une instance de [Connect](https://github.com/senchalabs/connect) pouvant être utilisée comme middleware dans n’importe quel framework Node.js compatible avec connect.
 
-L’étape suivante consiste à implémenter le code servant le HTML rendu par le serveur sur `*` :
+L’étape suivante consiste à implémenter le code servant le HTML rendu par le serveur sur `*`:
 
 ```js
 app.use('*', async (req, res, next) => {
@@ -122,7 +122,7 @@ app.use('*', async (req, res, next) => {
 
     // 3. charger l’entrée serveur. vite.ssrLoadModule transforme
     //    automatiquement votre code source au format modules ES pour qu’il
-    //    soit utilisable dans Node.js ! Aucun bundling n’est nécessaire,
+    //    soit utilisable dans Node.js! Aucun bundling n’est nécessaire,
     //    et l’invalidation fournie est efficace, à la manière du
     //    rafraîchissement des modules à la volée.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
@@ -147,7 +147,7 @@ app.use('*', async (req, res, next) => {
 })
 ```
 
-Le script `dev` de `package.json` devrait également être modifié pour plutôt utiliser le script serveur :
+Le script `dev` de `package.json` devrait également être modifié pour plutôt utiliser le script serveur:
 
 ```diff
   "scripts": {
@@ -158,12 +158,12 @@ Le script `dev` de `package.json` devrait également être modifié pour plutôt
 
 ## Compilation en production
 
-Pour mettre en production un projet usant du rendu côté serveur, on doit :
+Pour mettre en production un projet usant du rendu côté serveur, on doit:
 
 1. Produire une compilation du client normale, et
 2. Produire une compilation de rendu côté serveur, qui peut être chargée directement par `require()` afin que l’on n’ait pas besoin de repasser dans le `ssrLoadModule` de Vite.
 
-Les scripts de `package.json` ressembleront à ça :
+Les scripts de `package.json` ressembleront à ça:
 
 ```json
 {
@@ -177,7 +177,7 @@ Les scripts de `package.json` ressembleront à ça :
 
 Notez que le signal `--ssr` indique qu’il s’agit d’une compilation de rendu côté serveur. Il devrait également indiquer l’entrée de rendu côté serveur.
 
-Ensuite, dans `server.js`, on doit ajouter de la logique spécifique à la production en se référant à `{{ 'process.env.' + 'NODE_ENV' }}` :
+Ensuite, dans `server.js`, on doit ajouter de la logique spécifique à la production en se référant à `{{ 'process.env.' + 'NODE_ENV' }}`:
 
 - Au lieu de lire le `index.html` racine, utilisez plutôt `dist/client/index.html` comme template, puisqu’il contient les bons liens vers les ressources pour la compilation client.
 
@@ -196,11 +196,11 @@ Référez-vous aux démonstrations pour [Vue](https://github.com/vitejs/vite/tre
 + "build:client": "vite build --outDir dist/client --ssrManifest",
 ```
 
-Le script ci-dessus générera désormais un fichier `dist/client/ssr-manifest.json` pour la compilation client — oui, le manifeste de rendu côté serveur est généré depuis la compilation client car nous voulons associer les identifiants de modules aux fichiers clients. Le manifeste contient des associations entre les identifiants de modules et les morceaux (_chunks_) ou les fichiers de ressources correspondants.
+Le script ci-dessus générera désormais un fichier `dist/client/ssr-manifest.json` pour la compilation client —oui, le manifeste de rendu côté serveur est généré depuis la compilation client car nous voulons associer les identifiants de modules aux fichiers clients. Le manifeste contient des associations entre les identifiants de modules et les morceaux (_chunks_) ou les fichiers de ressources correspondants.
 
 Pour exploiter le manifeste, les frameworks doivent fournir un moyen de collecter les identifiants des modules des composants qui ont été utilisés durant le rendu côté serveur.
 
-`@vitejs/plugin-vue` intègre ce processus et inscrit automatiquement les identifiants des modules utilisés pour les composants sur le contexte de rendu côté serveur de Vue associé :
+`@vitejs/plugin-vue` intègre ce processus et inscrit automatiquement les identifiants des modules utilisés pour les composants sur le contexte de rendu côté serveur de Vue associé:
 
 ```js
 // src/entry-server.js
@@ -210,7 +210,7 @@ const html = await vueServerRenderer.renderToString(app, ctx)
 // été utilisés durant le rendu
 ```
 
-Dans la branche de production de `server.js` on doit lire et passer le manifeste à la fonction `render` exportée par `src/entry-server.js`. Cela fournit suffisamment d’informations pour rendre des directives de pré-chargement pour les fichiers utilisés par les routes asynchrones ! Voir la [source de la démonstration](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/src/entry-server.js) pour un exemple complet.
+Dans la branche de production de `server.js` on doit lire et passer le manifeste à la fonction `render` exportée par `src/entry-server.js`. Cela fournit suffisamment d’informations pour rendre des directives de pré-chargement pour les fichiers utilisés par les routes asynchrones! Voir la [source de la démonstration](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/src/entry-server.js) pour un exemple complet.
 
 ## Pré-rendu / génération côté serveur (_SSG_)
 
@@ -218,13 +218,13 @@ Si les routes et les données requises pour certaines routes sont connues à l�
 
 ## Externalisation
 
-De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation au format CommonJS peut être « externalisée » de la transformation et du système de modules du rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
+De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation au format CommonJS peut être «externalisée» de la transformation et du système de modules du rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
 
-Vite réalise l’externalisation du rendu côté serveur automatiquement selon les heuristiques suivantes :
+Vite réalise l’externalisation du rendu côté serveur automatiquement selon les heuristiques suivantes:
 
 - Si le point d’entrée de module ES résolu et son point d’entrée par défaut pour Node sont différents, le point d’entrée pour Node est probablement une compilation CommonJS qui peut être externalisé. Par exemple, `vue` sera externalisé automatiquement car il fournit à la fois une compilation en module ES et une compilation en CommonJS.
 
-- Sinon, Vite regardera si le point d’entrée du package contient de la syntaxe de modules ES valide — si ce n’est pas le cas, le package est probablement au format CommonJS et sera externalisé. Par exemple, `react-dom` sera externalisé automatiquement car il ne spécifie qu’une entrée et qu’elle est au format CommonJS.
+- Sinon, Vite regardera si le point d’entrée du package contient de la syntaxe de modules ES valide —si ce n’est pas le cas, le package est probablement au format CommonJS et sera externalisé. Par exemple, `react-dom` sera externalisé automatiquement car il ne spécifie qu’une entrée et qu’elle est au format CommonJS.
 
 Si les heuristiques mènent à des erreurs, vous pouvez ajuster manuellement l’externalisation du rendu côté serveur à l’aide des options de configuration `ssr.external` et `ssr.noExternal`.
 
@@ -236,13 +236,13 @@ Si vous avez configuré des alias qui redirigent un package vers un autre, vous 
 
 ## Logique de plugin spécifique au rendu côté serveur
 
-Certains frameworks comme Vue ou Svelte compilent leurs composants dans des formats différents suivant si le contexte est client ou rendu côté serveur. Pour supporter les transformations conditionnelles, Vite passe une propriété `ssr` supplémentaire à l’objet `options` des hooks de plugin suivants :
+Certains frameworks comme Vue ou Svelte compilent leurs composants dans des formats différents suivant si le contexte est client ou rendu côté serveur. Pour supporter les transformations conditionnelles, Vite passe une propriété `ssr` supplémentaire à l’objet `options` des hooks de plugin suivants:
 
 - `resolveId`
 - `load`
 - `transform`
 
-**Exemple :**
+**Exemple:**
 
 ```js
 export function mySSRPlugin() {
@@ -269,7 +269,7 @@ La cible par défaut de la compilation de rendu côté serveur est un environnem
 
 ## Bundle de rendu côté serveur
 
-Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre compilation de rendu côté serveur soit bundlée en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets :
+Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre compilation de rendu côté serveur soit bundlée en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets:
 
 - Toutes les dépendances seront traitées comme `noExternal`
 - Une erreur sera déclenchée si une fonctionnalité intégrée à Node.js est importée

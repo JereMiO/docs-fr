@@ -1,10 +1,10 @@
 # Déployer un site statique
 
-Les guides suivants partent du principe que les affirmations suivantes sont vraies :
+Les guides suivants partent du principe que les affirmations suivantes sont vraies:
 
 - Vous utilisez le dossier de sortie par défaut (`dist`). Cet emplacement [peut être modifié par l’option `build.outDir`](/config/#build-outdir), et vous devrez adapter les instructions de ces guides si c’est votre cas.
 - Vous utilisez npm. Vous pouvez utiliser les commandes équivalentes pour lancer les scripts si vous utilisez Yarn ou d’autres gestionnaires de paquets.
-- Vite est installé comme dépendance locale dans votre projet, et les scripts npm suivants sont configurés :
+- Vite est installé comme dépendance locale dans votre projet, et les scripts npm suivants sont configurés:
 
 ```json
 {
@@ -18,7 +18,7 @@ Les guides suivants partent du principe que les affirmations suivantes sont vrai
 Il est important de noter que `vite preview` est fait pour prévisualiser la compilation localement et pas pour être un serveur de production.
 
 ::: tip NOTE
-Ces guides fournissent des instructions pour effectuer un déploiement statique de votre site Vite. Vite supporte également le rendu côté serveur (_server side rendering_). Le rendu côté serveur fait référence aux frameworks front-end qui supportent le fait d’exécuter l’application dans Node.js, qui génére un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Allez voir le [guide du rendu côté serveur](./ssr) pour en savoir plus sur cette fonctionnalité. Autrement, si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
+Ces guides fournissent des instructions pour effectuer un déploiement statique de votre site Vite. Vite supporte également le rendu côté serveur (_server side rendering_). Le rendu côté serveur fait référence aux frameworks front-end qui supportent le fait d’exécuter l’application dans Node.js, qui génére un pré-rendu en HTML, et qui l’«hydratent» côté client en bout de course. Allez voir le [guide du rendu côté serveur](./ssr) pour en savoir plus sur cette fonctionnalité. Autrement, si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
 :::
 
 ## Compiler l’application
@@ -62,7 +62,7 @@ Maintenant le script `preview` lancera le serveur à `http://localhost:8080`.
 
    Si vous dépolyez sur `https://<UTILISATEUR>.github.io/<DÉPÔT>/`, par exemple si l’adresse de votre dépôt est `https://github.com/<UTILISATEUR>/<DÉPÔT>`, alors définissez `base` à `'/<DÉPÔT>/'`.
 
-2. Dans votre projet, créez un fichier `deploy.sh` avec le contenu suivant (les lignes mises en évidence doivent être décommentées si nécessaire), et lancez-le pour déployer :
+2. Dans votre projet, créez un fichier `deploy.sh` avec le contenu suivant (les lignes mises en évidence doivent être décommentées si nécessaire), et lancez-le pour déployer:
 
    ```bash{13,21,24}
    #!/usr/bin/env sh
@@ -105,7 +105,7 @@ Vous pouvez aussi lancer le script ci-dessus dans votre configuration CI pour d�
 
    Si vous dépolyez sur `https://<UTILISATEUR ou GROUPE>.gitlab.io/<DÉPÔT>/`, par exemple si l’adresse de votre dépôt est `https://gitlab.com/<UTILISATEUR>/<DÉPÔT>`, alors définissez `base` à `'/<DÉPÔT>/'`.
 
-2. Créez un fichier nommé `.gitlab-ci.yml` à la racine de votre projet avec le contenu ci-dessous. Cela va compiler et déployer votre site chaque fois que vous en modifiez le contenu :
+2. Créez un fichier nommé `.gitlab-ci.yml` à la racine de votre projet avec le contenu ci-dessous. Cela va compiler et déployer votre site chaque fois que vous en modifiez le contenu:
 
    ```yaml
    image: node:16.5.0
@@ -146,7 +146,7 @@ $ ntl init
 $ ntl deploy
 ```
 
-L’interface en ligne de commande Netlify vous donnera une URL de pré-visualisation pour que vous puissiez vérifier le résultat. Lorsque vous êtes prêt·e à mettre en production, utilisez le signal `prod` :
+L’interface en ligne de commande Netlify vous donnera une URL de pré-visualisation pour que vous puissiez vérifier le résultat. Lorsque vous êtes prêt·e à mettre en production, utilisez le signal `prod`:
 
 ```bash
 # Déployer le site en production
@@ -159,7 +159,7 @@ $ ntl deploy --prod
 
 1. Installez l’[interface en ligne de commande de Vercel](https://vercel.com/cli) et lancez `vercel` pour déployer.
 2. Vercel détectera que vous utilisez Vite et utilisera les bons paramètres pour votre déploiement.
-3. Votre application est déployée ! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+3. Votre application est déployée! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
 ```bash
 $ npm i -g vercel
@@ -174,9 +174,9 @@ Vercel CLI
 1. Poussez votre code sur le dépôt git (GitHub, GitLab, BitBucket).
 2. [Importez votre projet Vite](https://vercel.com/new) dans Vercel.
 3. Vercel détectera que vous utilisez Vite et utilisera les bons paramètres pour votre déploiement.
-4. Votre application est déployée ! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+4. Votre application est déployée! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-Après que votre projet ait été importé et déployé, chaque fois que vous pousserez, un [déploiement de prévisualisation](https://vercel.com/docs/concepts/deployments/environments#preview) sera généré, et tous les changements faits sur la branche de production (le plus souvent « main ») donneront lieu à des [déploiements de production](https://vercel.com/docs/concepts/deployments/environments#production).
+Après que votre projet ait été importé et déployé, chaque fois que vous pousserez, un [déploiement de prévisualisation](https://vercel.com/docs/concepts/deployments/environments#preview) sera généré, et tous les changements faits sur la branche de production (le plus souvent «main») donneront lieu à des [déploiements de production](https://vercel.com/docs/concepts/deployments/environments#production).
 
 En savoir plus sur l’[intégration git](https://vercel.com/docs/concepts/git) de Vercel.
 
@@ -212,10 +212,10 @@ Une fois que vos ressources sont téléchargées, Wrangler vous fournira une URL
 3. Choisissez **Create a new Project** puis **Connect Git**.
 4. Choisissez le projet git que vous voulez déployer et cliquez sur **Begin setup**.
 5. Choisissez votre framework dans les options de compilation suivant le framework Vite que vous avez choisi.
-6. Puis sauvegardez et déployez !
-7. Votre application est déployée ! (par exemple sur `https://<PROJET>.pages.dev/`)
+6. Puis sauvegardez et déployez!
+7. Votre application est déployée! (par exemple sur `https://<PROJET>.pages.dev/`)
 
-Après que votre projet ait été importé et déployé, chaque fois que vous pousserez, un [déploiement de prévisualisation](https://developers.cloudflare.com/pages/platform/preview-deployments/) sera généré (à moins que votre [configuration de compilation de branche](https://developers.cloudflare.com/pages/platform/branch-build-controls/) soit différente), et tous les changements faits sur la branche de production (le plus souvent « main ») donneront lieu à des déploiements de production.
+Après que votre projet ait été importé et déployé, chaque fois que vous pousserez, un [déploiement de prévisualisation](https://developers.cloudflare.com/pages/platform/preview-deployments/) sera généré (à moins que votre [configuration de compilation de branche](https://developers.cloudflare.com/pages/platform/branch-build-controls/) soit différente), et tous les changements faits sur la branche de production (le plus souvent «main») donneront lieu à des déploiements de production.
 
 Vous pouvez ajouter vos propres domaines et définir vos propres paramètres de compilation sur Pages. En savoir plus sur l’[intégration git](https://developers.cloudflare.com/pages/get-started/#manage-your-site) de Cloudflare Pages.
 
@@ -223,7 +223,7 @@ Vous pouvez ajouter vos propres domaines et définir vos propres paramètres de 
 
 1. Assurez-vous que vous ayez les [firebase-tools](https://www.npmjs.com/package/firebase-tools) d’installés.
 
-2. Créez `firebase.json` et `.firebaserc` à la racine de votre projet avec le contenu suivant :
+2. Créez `firebase.json` et `.firebaserc` à la racine de votre projet avec le contenu suivant:
 
    `firebase.json`:
 
@@ -247,7 +247,7 @@ Vous pouvez ajouter vos propres domaines et définir vos propres paramètres de 
    ```js
    {
      "projects": {
-       "default": "<VOTRE ID FIREBASE>"
+       "default": "<YOUR_FIREBASE_ID>"
      }
    }
    ```
@@ -266,14 +266,14 @@ Vous pouvez aussi déployer sur un [domaine personnalisé](http://surge.sh/help/
 
 ## Azure Static Web Apps
 
-Vous pouvez déployer votre application Vite rapidement avec le service Microsoft Azure [Static Web Apps](https://aka.ms/staticwebapps). Vous aurez besoin :
+Vous pouvez déployer votre application Vite rapidement avec le service Microsoft Azure [Static Web Apps](https://aka.ms/staticwebapps). Vous aurez besoin:
 
 - D’un compte Azure et d’une clé de souscription. Vous pouvez créer un [compte Azure gratuitement ici](https://azure.microsoft.com/free).
 - Que le code de votre application soit poussé sur [GitHub](https://github.com).
 - De l’[extension SWA](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestaticwebapps) pour [Visual Studio Code](https://code.visualstudio.com).
 
-Installez l’extension sur VS Code et naviguez à la racine de votre application. Ouvrez l’extension, connectez-vous à Azure, et cliquez sur le signe « + » pour créer une nouvelle Static Web App. On vous demandera quelle clé de souscription utiliser.
+Installez l’extension sur VS Code et naviguez à la racine de votre application. Ouvrez l’extension, connectez-vous à Azure, et cliquez sur le signe «+» pour créer une nouvelle Static Web App. On vous demandera quelle clé de souscription utiliser.
 
 Suivez les instructions de l’extension pour donner un nom à votre application, choisissez un framework, et donnez la racine de l’application (le plus souvent `/`) ainsi que l’emplacement des fichiers compilés `/dist`. Une action GitHub sera créée dans votre dépôt dans un dossier `.github`.
 
-L’action déploiera votre application (vous pouvez suivre la progression dans l’onglet Actions de votre dépôt) et, lorsque le process réussit, vous permettra de voir votre application à l’adresse fournie en cliquant sur le bouton « Browse Website » de la fenêtre de progression de l’extension, qui apparaît une fois que l’action GitHub s’est exécutée.
+L’action déploiera votre application (vous pouvez suivre la progression dans l’onglet Actions de votre dépôt) et, lorsque le process réussit, vous permettra de voir votre application à l’adresse fournie en cliquant sur le bouton «Browse Website» de la fenêtre de progression de l’extension, qui apparaît une fois que l’action GitHub s’est exécutée.

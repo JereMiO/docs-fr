@@ -29,21 +29,21 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    import 'vite/modulepreload-polyfill'
    ```
 
-2. Pour le développement, injectez ce qui suit dans le template HTML de votre serveur (remplacez `http://localhost:5173` par l’URL locale sur laquelle Vite est exposé) :
+2. Pour le développement, injectez ce qui suit dans le template HTML de votre serveur (remplacez `http://localhost:5173` par l’URL locale sur laquelle Vite est exposé):
 
    ```html
    <!-- si en mode développement -->
    <script type="module" src="http://localhost:5173/main.js"></script>
    ```
 
-   Pour servir correctement les assets, vous avez deux possibilités :
+   Pour servir correctement les assets, vous avez deux possibilités:
 
    - Assurez-vous que le serveur est configuré pour proxyfier les requêtes pour des ressources statiques vers le serveur Vite
    - Définissez [`server.origin`](/config/#server-origin) afin que les URLs de ressources générées soient résolues à l’aide de l’URL du serveur back-end plutôt qu’un chemin relatif
 
    Ceci est requis pour que les ressources telles que les images soient chargées correctement.
 
-   Notez que si vous utilisez React avec `@vitejs/plugin-react`, vous devrez aussi ajouter ceci avant le script ci-dessus, puisque le plugin ne peut pas modifier le HTML que vous servez :
+   Notez que si vous utilisez React avec `@vitejs/plugin-react`, vous devrez aussi ajouter ceci avant le script ci-dessus, puisque le plugin ne peut pas modifier le HTML que vous servez:
 
    ```html
    <script type="module">
@@ -55,7 +55,7 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    </script>
    ```
 
-3. Pour la production : après que vous ayez lancé `vite build`, un fichier `manifest.json` sera généré en plus des autres fichiers de ressources. Un fichier de manifeste ressemble à ceci :
+3. Pour la production: après que vous ayez lancé `vite build`, un fichier `manifest.json` sera généré en plus des autres fichiers de ressources. Un fichier de manifeste ressemble à ceci:
 
    ```json
    {
@@ -84,7 +84,7 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    - Pour les morceaux qui ne sont pas d’entrée, la clé est le nom de base du fichier généré préfixé par `_`.
    - Les morceaux contiendront des informations sur leurs imports statiques et dynamiques (les deux sont des clés qui renvoient vers le morceau correspondant dans le manifeste), et aussi sur le CSS qui leur est associé (s’il y en a).
 
-   Vous pouvez utiliser ce fichier pour rendre des liens ou des directives de pré-chargement (_preload directives_) de fichiers hachés (note : la syntaxe ci-dessous est pour l’exemple, remplacez-la par votre langage de templating côté serveur) :
+   Vous pouvez utiliser ce fichier pour rendre des liens ou des directives de pré-chargement (_preload directives_) de fichiers hachés (note: la syntaxe ci-dessous est pour l’exemple, remplacez-la par votre langage de templating côté serveur):
 
    ```html
    <!-- si en mode production -->

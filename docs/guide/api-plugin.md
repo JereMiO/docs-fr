@@ -17,20 +17,20 @@ Si vous apprenez, débuggez, ou écrivez des plugins nous recommandons d’inclu
 
 ## Conventions
 
-Si le plugin n’utilise pas de hook spécifique à Vite et peut être implémenté en tant que [plugin Rollup compatible](#compatibilite-des-plugins-rollup), alors il est recommandé d’utiliser les [conventions de nommage des plugins Rollup](https://rollupjs.org/guide/en/#conventions) :
+Si le plugin n’utilise pas de hook spécifique à Vite et peut être implémenté en tant que [plugin Rollup compatible](#compatibilite-des-plugins-rollup), alors il est recommandé d’utiliser les [conventions de nommage des plugins Rollup](https://rollupjs.org/guide/en/#conventions):
 
 - Les plugins doivent avoir un nom clair avec un préfixe `rollup-plugin-`.
 - Les `keywords` du package.json doivent inclure `rollup-plugin` et `vite-plugin`.
 
 Cela permet que le plugin soit aussi utilisable par des projets basés sur Rollup ou WMR.
 
-Pour les plugins uniquement compatibles avec Vite :
+Pour les plugins uniquement compatibles avec Vite:
 
 - Les plugins doivent avoir un nom clair avec un préfixe `vite-plugin-`.
 - Les `keywords` du package.json doivent inclure `vite-plugin`.
 - La documentation du plugin doit inclure une section expliquant pourquoi le plugin est uniquement compatible avec Vite (par exemple, parce qu’il utilise un hook spécifique à Vite).
 
-Si votre plugin ne fonctionne qu’avec un framework en particulier, son nom doit faire partie du préfixe :
+Si votre plugin ne fonctionne qu’avec un framework en particulier, son nom doit faire partie du préfixe:
 
 - `vite-plugin-vue-` pour les plugins Vue
 - `vite-plugin-react-` pour les plugins React
@@ -133,7 +133,7 @@ export default function myPlugin() {
 }
 ```
 
-Ce qui permet d’importer le module en JavaScript :
+Ce qui permet d’importer le module en JavaScript:
 
 ```js
 import { msg } from '@my-virtual-module'
@@ -149,18 +149,18 @@ Notez que les modules directement tirés d’un vrai fichier, comme c’est le c
 
 Pendant le développement, le serveur de Vite crée un conteneur de plugin qui invoque les [hooks de compilation de Rollup](https://rollupjs.org/guide/en/#build-hooks) de la même façon que le fait Rollup.
 
-Les hooks suivants sont appelés une fois lors du démarrage du serveur :
+Les hooks suivants sont appelés une fois lors du démarrage du serveur:
 
 - [`options`](https://rollupjs.org/guide/en/#options)
 - [`buildStart`](https://rollupjs.org/guide/en/#buildstart)
 
-Les hooks suivants sont appelés à chaque requête de module entrante :
+Les hooks suivants sont appelés à chaque requête de module entrante:
 
 - [`resolveId`](https://rollupjs.org/guide/en/#resolveid)
 - [`load`](https://rollupjs.org/guide/en/#load)
 - [`transform`](https://rollupjs.org/guide/en/#transform)
 
-Les hooks suivants sont appelés quand le serveur se ferme :
+Les hooks suivants sont appelés quand le serveur se ferme:
 
 - [`buildEnd`](https://rollupjs.org/guide/en/#buildend)
 - [`closeBundle`](https://rollupjs.org/guide/en/#closebundle)
@@ -175,12 +175,12 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ### `config`
 
-- **Type :** `(config: UserConfig, env: { mode: string, command: string }) => UserConfig | null | void`
-- **Genre :** `asynchrone`, `séquentiel`
+- **Type:** `(config: UserConfig, env: { mode: string, command: string }) => UserConfig | null | void`
+- **Genre:** `asynchrone`, `séquentiel`
 
   Modifie la configuration de Vite avant qu’elle ne soit résolue. Le hook reçoit la configuration brute de l’utilisateur (les options de l’interface en ligne de commande fusionnées avec le fichier de configuration) et l’environnement de configuration courant qui expose le `mode` et la `command`. Il peut retourner un objet de configuration incomplet qui sera fusionné avec la configuration existante, ou directement muter la configuration (si la fusion par défaut ne permet pas d’atteindre le résultat souhaité).
 
-  **Exemple :**
+  **Exemple:**
 
   ```js
   // retourne une configuration incomplète (recommandé)
@@ -211,12 +211,12 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ### `configResolved`
 
-- **Type :** `(config: ResolvedConfig) => void | Promise<void>`
-- **Genre :** `asynchrone`, `parallèle`
+- **Type:** `(config: ResolvedConfig) => void | Promise<void>`
+- **Genre:** `asynchrone`, `parallèle`
 
   Appelé après que la configuration de Vite ne soit résolue. Utilisez ce hook pour lire et stocker la configuration résolue. Il est aussi utile quand le plugin doit faire quelque chose de différent selon la commande utilisée.
 
-  **Exemple :**
+  **Exemple:**
 
   ```js
   const examplePlugin = () => {
@@ -233,9 +233,9 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
       // utiliser la configuration stockée dans un autre hook
       transform(code, id) {
         if (config.command === 'serve') {
-          // développement : plugin invoqué par le serveur de développement
+          // développement: plugin invoqué par le serveur de développement
         } else {
-          // build : plugin invoqué par Rollup
+          // build: plugin invoqué par Rollup
         }
       }
     }
@@ -246,11 +246,11 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ### `configureServer`
 
-- **Type :** `(server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>`
-- **Genre :** `asynchrone`, `séquentiel`
-- **Voir aussi :** [ViteDevServer](./api-javascript#vitedevserver)
+- **Type:** `(server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>`
+- **Genre:** `asynchrone`, `séquentiel`
+- **Voir aussi:** [ViteDevServer](./api-javascript#vitedevserver)
 
-  Utilisez ce hook pour configurer le serveur de développement. Le cas d’usage le plus courant est d’ajouter des middlewares spécifiques à l’application [connect](https://github.com/senchalabs/connect) interne :
+  Utilisez ce hook pour configurer le serveur de développement. Le cas d’usage le plus courant est d’ajouter des middlewares spécifiques à l’application [connect](https://github.com/senchalabs/connect) interne:
 
   ```js
   const myPlugin = () => ({
@@ -265,7 +265,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
   **Injecter des middlewares après-coup**
 
-  Le hook `configureServer` est appelé avant que les middlewares internes ne soient installés, alors les middlewares spécifiques s’exécuteront avant les middlewares internes par défaut. Si vous voulez injecter un middleware **après** les middlewares internes, vous pouvez retourner une fonction dans `configureServer`, qui sera appelée après que les middlewares internes soient installés :
+  Le hook `configureServer` est appelé avant que les middlewares internes ne soient installés, alors les middlewares spécifiques s’exécuteront avant les middlewares internes par défaut. Si vous voulez injecter un middleware **après** les middlewares internes, vous pouvez retourner une fonction dans `configureServer`, qui sera appelée après que les middlewares internes soient installés:
 
   ```js
   const myPlugin = () => ({
@@ -284,7 +284,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
   **Stocker l’accès au serveur**
 
-  Dans certaines cas, d’autres hooks de plugins peuvent avoir besoin d’accéder à l’instance du serveur de développement (par exemple pour accéder au serveur web socket, au watcher du système de fichiers, ou au graphe des modules). Ce hook peut aussi être utilisé pour stocker l’instance du serveur et s’en servir dans d’autres hooks :
+  Dans certaines cas, d’autres hooks de plugins peuvent avoir besoin d’accéder à l’instance du serveur de développement (par exemple pour accéder au serveur web socket, au watcher du système de fichiers, ou au graphe des modules). Ce hook peut aussi être utilisé pour stocker l’instance du serveur et s’en servir dans d’autres hooks:
 
   ```js
   const myPlugin = () => {
@@ -307,18 +307,18 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ### `transformIndexHtml`
 
-- **Type :** `IndexHtmlTransformHook | { enforce?: 'pre' | 'post', transform: IndexHtmlTransformHook }`
-- **Genre :** `asynchrone`, `séquentiel`
+- **Type:** `IndexHtmlTransformHook | { enforce?: 'pre' | 'post', transform: IndexHtmlTransformHook }`
+- **Genre:** `asynchrone`, `séquentiel`
 
   Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d’une chaîne de caractères et un contexte de transformation. Le contexte expose l’instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant la compilation.
 
-  Le hook peut être asynchrone et retourne un des formats suivants :
+  Le hook peut être asynchrone et retourne un des formats suivants:
 
   - Chaîne de caractères HTML transformée.
   - Une liste d’objets décrivant des éléments (`{ balise, attributs, enfants }`) à injecter dans le HTML existant. Chaque élément peut aussi spécifier où il doit être injecté (par défaut il est ajouté à la fin de `<head>`).
   - Un objet contenant les deux (`{ html, éléments }`).
 
-  **Exemple basique :**
+  **Exemple basique:**
 
   ```js
   const htmlPlugin = () => {
@@ -334,7 +334,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   }
   ```
 
-  **Signature complète du hook :**
+  **Signature complète du hook:**
 
   ```ts
   type IndexHtmlTransformHook = (
@@ -364,7 +364,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
     attrs?: Record<string, string | boolean>
     children?: string | HtmlTagDescriptor[]
     /**
-     * par défaut : 'head-prepend'
+     * par défaut: 'head-prepend'
      */
     injectTo?: 'head' | 'body' | 'head-prepend' | 'body-prepend'
   }
@@ -372,9 +372,9 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ### `handleHotUpdate`
 
-- **Type :** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
+- **Type:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
 
-  Gère le remplacement des modules à la volée (_HMR_). Le hook reçoit un objet de contexte avec la signature suivante :
+  Gère le remplacement des modules à la volée (_HMR_). Le hook reçoit un objet de contexte avec la signature suivante:
 
   ```ts
   interface HmrContext {
@@ -390,11 +390,11 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
   - `read` est une fonction de lecture asynchrone qui retourne le contenu du fichier. Elle est fournie car sur certains systèmes, le callback lorsqu’un fichier est modifié peut être déclenché trop rapidement (avant que l’éditeur ne finisse de se mettre à jour) et utiliser `fs.readFile` directement retournera un contenu vide. La fonction read permet de normaliser ce comportement.
 
-  Le hook peut choisir de :
+  Le hook peut choisir de:
 
   - Filtrer et réduire la liste des modules affectés pour que le remplacement des modules à la volée soit plus précis.
 
-  - Retourner une liste vide et faire le remplacement de façon complétement custom en envoyant des évènements au client :
+  - Retourner une liste vide et faire le remplacement de façon complétement custom en envoyant des évènements au client:
 
     ```js
     handleHotUpdate({ server }) {
@@ -407,7 +407,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
     }
     ```
 
-    Le code client doit utiliser le handler correspondant à l’aide de l’[API du rafraîchissement des modules](./api-hmr) (qui peut être injecté par le hook `transform` du même plugin) :
+    Le code client doit utiliser le handler correspondant à l’aide de l’[API du rafraîchissement des modules](./api-hmr) (qui peut être injecté par le hook `transform` du même plugin):
 
     ```js
     if (import.meta.hot) {
@@ -419,7 +419,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ## Ordre du plugin
 
-Un plugin Vite peut également spécifier une propriété `enforce` (à la manière des loaders webpack) pour ajuster son ordre dans la liste. La valeur d’`enforce` peut être soit `"pre"` soit `"post"`. Les plugins résolus seront traités dans l’ordre suivant :
+Un plugin Vite peut également spécifier une propriété `enforce` (à la manière des loaders webpack) pour ajuster son ordre dans la liste. La valeur d’`enforce` peut être soit `"pre"` soit `"post"`. Les plugins résolus seront traités dans l’ordre suivant:
 
 - Alias.
 - Plugins utilisateur avec `enforce: 'pre'`.
@@ -431,7 +431,7 @@ Un plugin Vite peut également spécifier une propriété `enforce` (à la mani�
 
 ## Application conditionnelle
 
-Par défaut les plugins sont invoqués à la fois pour `serve` et `build`. Dans les cas où un plugin ne doit être appliqué conditionnellement que pour serve ou `build`, utilisez la propriété `apply` pour seulement l’invoquer durant `'build'` ou `'serve'` :
+Par défaut les plugins sont invoqués à la fois pour `serve` et `build`. Dans les cas où un plugin ne doit être appliqué conditionnellement que pour serve ou `build`, utilisez la propriété `apply` pour seulement l’invoquer durant `'build'` ou `'serve'`:
 
 ```js
 function myPlugin() {
@@ -442,7 +442,7 @@ function myPlugin() {
 }
 ```
 
-Un fonction peut aussi être utilisée, pour plus de contrôle :
+Un fonction peut aussi être utilisée, pour plus de contrôle:
 
 ```js
 apply(config, { command }) {
@@ -455,14 +455,14 @@ apply(config, { command }) {
 
 Une bonne quantité de plugins Rollup fonctionnera directement comme plugin Vite (par exemple `@rollup/plugin-alias` ou `@rollup/plugin-json`), mais pas tous, puisque certains hooks de plugin n’ont pas de sens dans le contexte d’un serveur de développement sans bundling.
 
-En général, tant qu’un plugin Rollup respecte les critères suivants il devrait fonctionner comme plugin Vite :
+En général, tant qu’un plugin Rollup respecte les critères suivants il devrait fonctionner comme plugin Vite:
 
 - Il n’utilise pas le hook [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed).
 - Sa phase de bundling et sa phase d’output sont découplées.
 
 Si un plugin Rollup n’a de sens que pour la phase de compilation, alors il peut être spécifié sous `build.rollupOptions.plugins`.
 
-Vous pouvez aussi agrémenter un plugin Rollup existant de propriétés propres à Vite :
+Vous pouvez aussi agrémenter un plugin Rollup existant de propriétés propres à Vite:
 
 ```js
 // vite.config.js

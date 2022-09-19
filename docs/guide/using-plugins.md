@@ -4,7 +4,7 @@ Vite peut être étendu à l’aide de plugins, qui sont basés sur la très bon
 
 ## Ajouter un plugin
 
-Pour pouvoir utiliser un plugin, il doit être ajouté aux `devDependencies` du projet et être inclus à l’array `plugins` du fichier de configuration `vite.config.js`. Par exemple, pour permettre le support des navigateurs anciens, le plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) peut être utilisé :
+Pour pouvoir utiliser un plugin, il doit être ajouté aux `devDependencies` du projet et être inclus à l’array `plugins` du fichier de configuration `vite.config.js`. Par exemple, pour permettre le support des navigateurs anciens, le plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) peut être utilisé:
 
 ```
 $ npm i -D @vitejs/plugin-legacy
@@ -40,11 +40,11 @@ Vous pouvez également trouver les plugins qui suivent les [conventions recomman
 
 ## Forcer l’ordre des plugins
 
-Pour assurer la compatibilité avec certains plugins Rollup, il est possible qu’il soit nécessaire de forcer l’ordre d’un plugin ou de seulement l’appliquer pour la compilation. Cela devrait être un détail d’implémentation des plugins Vite. Vous pouvez forcer la position d’un plugin avec le modifieur `enforce` :
+Pour assurer la compatibilité avec certains plugins Rollup, il est possible qu’il soit nécessaire de forcer l’ordre d’un plugin ou de seulement l’appliquer pour la compilation. Cela devrait être un détail d’implémentation des plugins Vite. Vous pouvez forcer la position d’un plugin avec le modifieur `enforce`:
 
-- `pre` : invoque le plugin avant les plugins du noyau de Vite
-- par défaut : invoque le plugin après les plugins du noyau de Vite
-- `post` : invoque le plugin après les plugins de compilation de Vite
+- `pre`: invoque le plugin avant les plugins du noyau de Vite
+- par défaut: invoque le plugin après les plugins du noyau de Vite
+- `post`: invoque le plugin après les plugins de compilation de Vite
 
 ```js
 // vite.config.js
@@ -65,7 +65,7 @@ Allez voir le [Guide de l’API pour plugin](api-plugin.md#ordre-du-plugin) pour
 
 ## Application conditionnelle
 
-Par défaut, les plugins sont invoqués à la fois pour le développement et pour la compilation. Dans les cas où un plugin doit être appliqué conditionnellement seulement pour le développement ou pour la compilation, utilisez la propriété `apply` pour l’invoquer seulement durant `'build'` ou `'serve'` :
+Par défaut, les plugins sont invoqués à la fois pour le développement et pour la compilation. Dans les cas où un plugin doit être appliqué conditionnellement seulement pour le développement ou pour la compilation, utilisez la propriété `apply` pour l’invoquer seulement durant `'build'` ou `'serve'`:
 
 ```js
 // vite.config.js
