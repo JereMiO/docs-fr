@@ -264,60 +264,6 @@ Vous pouvez ajouter vos propres domaines et définir vos propres paramètres de 
 
 Vous pouvez aussi déployer sur un [domaine personnalisé](http://surge.sh/help/adding-a-custom-domain) en ajoutant `surge dist votredomaine.com`.
 
-## Heroku
-
-1. Installez [l’interface en ligne de commande d’Heroku](https://devcenter.heroku.com/articles/heroku-cli).
-
-2. Créez un compte Heroku sur [cette page](https://signup.heroku.com).
-
-3. Lancez `heroku login` et entrez vos identifiants de connexion Heroku :
-
-   ```bash
-   $ heroku login
-   ```
-
-4. Créez un fichier nommé `static.json` à la racine de votre projet avec le contenu suivant :
-
-   `static.json`:
-
-   ```json
-   {
-     "root": "./dist"
-   }
-   ```
-
-   C’est la configuration de votre site ; apprenez-en plus sur [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static).
-
-5. Configurez votre git Heroku distant :
-
-   ```bash
-   # Changement de version
-   $ git init
-   $ git add .
-   $ git commit -m "Mon site prêt à déployer."
-
-   # Créer une nouvelle application avec le nom spécifié
-   $ heroku apps:create example
-   ```
-
-6. Mettez en place buildpacks. Nous utiliserons `heroku/nodejs` pour compiler le projet et `heroku-buildpack-static` pour le servir
-
-  ```bash
-   # Mettre en place buildpacks
-   $ heroku buildpacks:set heroku/nodejs
-   $ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
-   ```
-
-7. Déployez votre site :
-
-   ```bash
-   # Publier le site
-   $ git push heroku main
-
-   # Ouvrir un navigateur pour voir la version du Dashboard d’Heroku CI
-   $ heroku open
-   ```
-
 ## Azure Static Web Apps
 
 Vous pouvez déployer votre application Vite rapidement avec le service Microsoft Azure [Static Web Apps](https://aka.ms/staticwebapps). Vous aurez besoin :
