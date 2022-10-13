@@ -113,12 +113,11 @@ Les modules virtuels sont un procédé utile qui permet de passer des informatio
 
 ```js
 export default function myPlugin() {
-  const virtualModuleId = '@my-virtual-module'
+  const virtualModuleId = 'virtual:my-module'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
-    name: 'my-plugin', // requis, sera utilisé pour les avertissements et les
-                       // erreurs
+    name: 'my-plugin', // requis, sera utilisé pour les avertissements et les erreurs
     resolveId(id) {
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId
@@ -136,7 +135,7 @@ export default function myPlugin() {
 Ce qui permet d’importer le module en JavaScript:
 
 ```js
-import { msg } from '@my-virtual-module'
+import { msg } from 'virtual:my-module'
 
 console.log(msg)
 ```
@@ -176,7 +175,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 ### `config`
 
 - **Type:** `(config: UserConfig, env: { mode: string, command: string }) => UserConfig | null | void`
-- **Genre:** `asynchrone`, `séquentiel`
+- **Kind:** `async`, `sequential`
 
   Modifie la configuration de Vite avant qu’elle ne soit résolue. Le hook reçoit la configuration brute de l’utilisateur (les options de l’interface en ligne de commande fusionnées avec le fichier de configuration) et l’environnement de configuration courant qui expose le `mode` et la `command`. Il peut retourner un objet de configuration incomplet qui sera fusionné avec la configuration existante, ou directement muter la configuration (si la fusion par défaut ne permet pas d’atteindre le résultat souhaité).
 
@@ -187,32 +186,33 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   const partialConfigPlugin = () => ({
     name: 'return-partial',
     config: () => ({
-      alias: {
-        foo: 'bar'
+      resolve: {
+        alias: {
+          foo: 'bar'
+        }
       }
     })
   })
 
-  // mute directement la configuration (à utiliser seulement si la fusion ne
-  // convient pas)
+  // mutate the config directly (use only when merging doesn't work)
   const mutateConfigPlugin = () => ({
     name: 'mutate-config',
     config(config, { command }) {
       if (command === 'build') {
-        config.root = __dirname
+        config.root = 'foo'
       }
     }
   })
   ```
 
   ::: warning Note
-  Les plugins utilisateur sont résolus avant que ce hook ne soit exécuté alors injecter d’autres plugins dans le hook `config` n’aura aucun effet.
+  User plugins are resolved before running this hook so injecting other plugins inside the `config` hook will have no effect.
   :::
 
 ### `configResolved`
 
 - **Type:** `(config: ResolvedConfig) => void | Promise<void>`
-- **Genre:** `asynchrone`, `parallèle`
+- **Kind:** `async`, `parallel`
 
   Appelé après que la configuration de Vite ne soit résolue. Utilisez ce hook pour lire et stocker la configuration résolue. Il est aussi utile quand le plugin doit faire quelque chose de différent selon la commande utilisée.
 
@@ -233,9 +233,9 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
       // utiliser la configuration stockée dans un autre hook
       transform(code, id) {
         if (config.command === 'serve') {
-          // développement: plugin invoqué par le serveur de développement
+          // dev: plugin invoked by dev server
         } else {
-          // build: plugin invoqué par Rollup
+          // build: plugin invoked by Rollup
         }
       }
     }
@@ -247,17 +247,17 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 ### `configureServer`
 
 - **Type:** `(server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>`
-- **Genre:** `asynchrone`, `séquentiel`
-- **Voir aussi:** [ViteDevServer](./api-javascript#vitedevserver)
+- **Kind:** `async`, `sequential`
+- **See also:** [ViteDevServer](./api-javascript#vitedevserver)
 
-  Utilisez ce hook pour configurer le serveur de développement. Le cas d’usage le plus courant est d’ajouter des middlewares spécifiques à l’application [connect](https://github.com/senchalabs/connect) interne:
+  Hook for configuring the dev server. The most common use case is adding custom middlewares to the internal [connect](https://github.com/senchalabs/connect) app:
 
   ```js
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        // manipuler les requêtes…
+        // custom handle request...
       })
     }
   })
@@ -303,12 +303,34 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   }
   ```
 
-  Notez que `configureServer` n’est pas appelé au moment de la compilation de production alors vos autres hooks doivent gérer le cas où l’instance de serveur est absente.
+  Note `configureServer` is not called when running the production build so your other hooks need to guard against its absence.
+
+### `configurePreviewServer`
+
+- **Type:** `(server: { middlewares: Connect.Server, httpServer: http.Server }) => (() => void) | void | Promise<(() => void) | void>`
+- **Kind:** `async`, `sequential`
+
+  Same as [`configureServer`](/guide/api-plugin.html#configureserver) but for the preview server. It provides the [connect](https://github.com/senchalabs/connect) server and its underlying [http server](https://nodejs.org/api/http.html). Similarly to `configureServer`, the `configurePreviewServer` hook is called before other middlewares are installed. If you want to inject a middleware **after** other middlewares, you can return a function from `configurePreviewServer`, which will be called after internal middlewares are installed:
+
+  ```js
+  const myPlugin = () => ({
+    name: 'configure-preview-server',
+    configurePreviewServer(server) {
+      // return a post hook that is called after other middlewares are
+      // installed
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          // custom handle request...
+        })
+      }
+    }
+  })
+  ```
 
 ### `transformIndexHtml`
 
 - **Type:** `IndexHtmlTransformHook | { enforce?: 'pre' | 'post', transform: IndexHtmlTransformHook }`
-- **Genre:** `asynchrone`, `séquentiel`
+- **Kind:** `async`, `sequential`
 
   Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d’une chaîne de caractères et un contexte de transformation. Le contexte expose l’instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant la compilation.
 
@@ -421,17 +443,17 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 Un plugin Vite peut également spécifier une propriété `enforce` (à la manière des loaders webpack) pour ajuster son ordre dans la liste. La valeur d’`enforce` peut être soit `"pre"` soit `"post"`. Les plugins résolus seront traités dans l’ordre suivant:
 
-- Alias.
-- Plugins utilisateur avec `enforce: 'pre'`.
-- Plugins internes à Vite.
-- Plugins utilisateur sans valeur pour enforce.
-- Plugins de compilation de Vite.
-- Plugins utilisateur avec `enforce: 'post'`.
-- Plugins de compilation finaux de Vite (minification, manifeste, reporting).
+- Alias
+- User plugins with `enforce: 'pre'`
+- Vite core plugins
+- User plugins without enforce value
+- Vite build plugins
+- User plugins with `enforce: 'post'`
+- Vite post build plugins (minify, manifest, reporting)
 
 ## Application conditionnelle
 
-Par défaut les plugins sont invoqués à la fois pour `serve` et `build`. Dans les cas où un plugin ne doit être appliqué conditionnellement que pour serve ou `build`, utilisez la propriété `apply` pour seulement l’invoquer durant `'build'` ou `'serve'`:
+By default plugins are invoked for both serve and build. In cases where a plugin needs to be conditionally applied only during serve or build, use the `apply` property to only invoke them during `'build'` or `'serve'`:
 
 ```js
 function myPlugin() {
@@ -442,7 +464,7 @@ function myPlugin() {
 }
 ```
 
-Un fonction peut aussi être utilisée, pour plus de contrôle:
+Une fonction peut aussi être utilisée, pour plus de contrôle:
 
 ```js
 apply(config, { command }) {
@@ -482,7 +504,6 @@ export default defineConfig({
 
 Lisez la [liste des plugins Rollup compatibles avec Vite](https://vite-rollup-plugins.patak.dev) pour plus d’informations sur les plugins officiels Rollup et pour des instructions d’utilisation (en anglais).
 
-
 ## Normalisation des chemins
 
 Vite normalise les chemins lorsqu’il résout les identifiants de manière à utiliser les séparateurs POSIX ( / ) tout en préservant le volume sur Windows. D’un autre côté, Rollup garde les chemins résolus intacts par défaut, alors les identifiants résolus ont des séparateurs win32 ( \\ ) sur Windows. Cependant, les plugins Rollup utilisent la [fonction utilitaire `normalizePath`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#normalizepath) de `@rollup/pluginutils`, qui convertit les séparateurs au format POSIX avant de faire des comparaisons. Cela signifie que lorsque ces plugins sont utilisés dans Vite, les patterns de configuration `include`, `exclude` et similaires peuvent faire de la comparaison avec les identifiants résolus.
@@ -494,4 +515,92 @@ import { normalizePath } from 'vite'
 
 normalizePath('foo\\bar') // 'foo/bar'
 normalizePath('foo/bar') // 'foo/bar'
+```
+
+## Filtering, include/exclude pattern
+
+Vite exposes [`@rollup/pluginutils`'s `createFilter`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#createfilter) function to encourage Vite specific plugins and integrations to use the standard include/exclude filtering pattern, which is also used in Vite core itself.
+
+## Client-server Communication
+
+Since Vite 2.9, we provide some utilities for plugins to help handle the communication with clients.
+
+### Server to Client
+
+On the plugin side, we could use `server.ws.send` to broadcast events to all the clients:
+
+```js
+// vite.config.js
+export default defineConfig({
+  plugins: [
+    {
+      // ...
+      configureServer(server) {
+        server.ws.send('my:greetings', { msg: 'hello' })
+      }
+    }
+  ]
+})
+```
+
+::: tip NOTE
+We recommend **always prefixing** your event names to avoid collisions with other plugins.
+:::
+
+On the client side, use [`hot.on`](/guide/api-hmr.html#hot-on-event-cb) to listen to the events:
+
+```ts
+// client side
+if (import.meta.hot) {
+  import.meta.hot.on('my:greetings', (data) => {
+    console.log(data.msg) // hello
+  })
+}
+```
+
+### Client to Server
+
+To send events from the client to the server, we can use [`hot.send`](/guide/api-hmr.html#hot-send-event-payload):
+
+```ts
+// client side
+if (import.meta.hot) {
+  import.meta.hot.send('my:from-client', { msg: 'Hey!' })
+}
+```
+
+Then use `server.ws.on` and listen to the events on the server side:
+
+```js
+// vite.config.js
+export default defineConfig({
+  plugins: [
+    {
+      // ...
+      configureServer(server) {
+        server.ws.on('my:from-client', (data, client) => {
+          console.log('Message from client:', data.msg) // Hey!
+          // reply only to the client (if needed)
+          client.send('my:ack', { msg: 'Hi! I got your message!' })
+        })
+      }
+    }
+  ]
+})
+```
+
+### TypeScript for Custom Events
+
+It is possible to type custom events by extending the `CustomEventMap` interface:
+
+```ts
+// events.d.ts
+import 'vite/types/customEvent'
+
+declare module 'vite/types/customEvent' {
+  interface CustomEventMap {
+    'custom:foo': { msg: string }
+    // 'event-key': payload
+  }
+}
 ```
