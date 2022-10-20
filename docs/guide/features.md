@@ -126,6 +126,8 @@ Vite fournit un support de première classe pour Vue:
 - Support des composants à fichier unique (_SFC_) de Vue 3 à l'aide de [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
 - Support du JSX pour Vue 3 à l'aide de [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
 - Support de Vue 2 à l'aide de [underfin/vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
+- Support de Vue 2.7 à l'aide de [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
+- Support de Vue <2.7 à l'aide de [vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
 
 ## JSX
 

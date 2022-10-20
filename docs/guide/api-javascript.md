@@ -13,12 +13,14 @@ async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 **Exemple d'utilisation:**
 
 ```js
-const { createServer } = require('vite')
+import { fileURLToPath } from 'url'
+import { createServer } from 'vite'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 ;(async () => {
   const server = await createServer({
-    // n'importe quelles options de configuration valides, ainsi que `mode` et
-    // `configFile`
+    // any valid user config options, plus `mode` and `configFile`
     configFile: false,
     root: __dirname,
     server: {
@@ -31,12 +33,23 @@ const { createServer } = require('vite')
 })()
 ```
 
+::: tip NOTE
+When using `createServer` and `build` in the same Node.js process, both functions rely on `process.env.`<wbr>`NODE_ENV` to work properly, which also depends on the `mode` config option. To prevent conflicting behavior, set `process.env.`<wbr>`NODE_ENV` or the `mode` of the two APIs to `development`. Otherwise, you can spawn a child process to run the APIs separately.
+:::
+
 ## `InlineConfig`
 
 L'interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires:
 
 - `configFile`: spécifie le fichier de configuration à utiliser. S'il n'est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
 - `envFile`: définissez-la à `false` pour désactiver la prise en charge des fichiers `.env`.
+
+## `ResolvedConfig`
+
+The `ResolvedConfig` interface has all the same properties of a `UserConfig`, except most properties are resolved and non-undefined. It also contains utilities like:
+
+- `config.assetsInclude`: A function to check if an `id` is considered an asset.
+- `config.logger`: Vite's internal logger object.
 
 ## `ViteDevServer`
 
@@ -81,8 +94,13 @@ interface ViteDevServer {
    */
   moduleGraph: ModuleGraph
   /**
-   * Résoudre, charger et transformer programmatiquement une URL et recevoir le
-   * résultat sans passer par la pipeline de requête HTTP.
+   * The resolved urls Vite prints on the CLI. null in middleware mode or
+   * before `server.listen` is called.
+   */
+  resolvedUrls: ResolvedServerUrls | null
+  /**
+   * Programmatically resolve, load and transform a URL and get the result
+   * without going through the http request pipeline.
    */
   transformRequest(
     url: string,
@@ -141,8 +159,11 @@ async function build(
 **Exemple d'utilisation:**
 
 ```js
-const path = require('path')
-const { build } = require('vite')
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { build } from 'vite'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 ;(async () => {
   await build({
@@ -158,8 +179,6 @@ const { build } = require('vite')
 ```
 
 ## `preview`
-
-**Expérimental**
 
 **Signature de type:**
 
@@ -194,11 +213,73 @@ const { preview } = require('vite')
 async function resolveConfig(
   inlineConfig: InlineConfig,
   command: 'build' | 'serve',
-  defaultMode?: string
+  defaultMode = 'development'
 ): Promise<ResolvedConfig>
 ```
 
-La valeur de `command` est `serve` en développement (dans l'interface en ligne de commande, `vite`, `vite dev`, et `vite serve` sont des alias).
+The `command` value is `serve` in dev (in the cli `vite`, `vite dev`, and `vite serve` are aliases).
+
+## `mergeConfig`
+
+**Type Signature:**
+
+```ts
+function mergeConfig(
+  defaults: Record<string, any>,
+  overrides: Record<string, any>,
+  isRoot = true
+): Record<string, any>
+```
+
+Deeply merge two Vite configs. `isRoot` represents the level within the Vite config which is being merged. For example, set `false` if you're merging two `build` options.
+
+## `searchForWorkspaceRoot`
+
+**Type Signature:**
+
+```ts
+function searchForWorkspaceRoot(
+  current: string,
+  root = searchForPackageRoot(current)
+): string
+```
+
+**Related:** [server.fs.allow](/config/server-options.md#server-fs-allow)
+
+Search for the root of the potential workspace if it meets the following conditions, otherwise it would fallback to `root`:
+
+- contains `workspaces` field in `package.json`
+- contains one of the following file
+  - `lerna.json`
+  - `pnpm-workspace.yaml`
+
+## `loadEnv`
+
+**Type Signature:**
+
+```ts
+function loadEnv(
+  mode: string,
+  envDir: string,
+  prefixes: string | string[] = 'VITE_'
+): Record<string, string>
+```
+
+**Related:** [`.env` Files](./env-and-mode.md#env-files)
+
+Load `.env` files within the `envDir`. By default, only env variables prefixed with `VITE_` are loaded, unless `prefixes` is changed.
+
+## `normalizePath`
+
+**Type Signature:**
+
+```ts
+function normalizePath(id: string): string
+```
+
+**Related:** [Path Normalization](./api-plugin.md#path-normalization)
+
+Normalizes a path to interoperate between Vite plugins.
 
 ## `transformWithEsbuild`
 
@@ -212,3 +293,24 @@ async function transformWithEsbuild(
   inMap?: object
 ): Promise<ESBuildTransformResult>
 ```
+
+Transform JavaScript or TypeScript with esbuild. Useful for plugins that prefer matching Vite's internal esbuild transform.
+
+## `loadConfigFromFile`
+
+**Type Signature:**
+
+```ts
+async function loadConfigFromFile(
+  configEnv: ConfigEnv,
+  configFile?: string,
+  configRoot: string = process.cwd(),
+  logLevel?: LogLevel
+): Promise<{
+  path: string
+  config: UserConfig
+  dependencies: string[]
+} | null>
+```
+
+Load a Vite config file manually with esbuild.

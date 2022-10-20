@@ -1,8 +1,4 @@
-# Rendu côté serveur (_SSR_)
-
-:::warning Expérimental
-Le support du rendu côté serveur est toujours expérimental et vous risquez de rencontrer des bugs et des cas d'usages non supportés. Utilisez-le en connaissance de cause.
-:::
+# Server-Side Rendering
 
 :::tip Note
 Le rendu côté serveur fait référence aux frameworks front-end (par exemple React, Preact, Vue ou Svelte) qui supportent le fait d'exécuter l'application dans Node.js, qui génére un pré-rendu en HTML, et qui l'«hydratent» côté client en bout de course. Si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d'intégration du back-end](./backend-integration).
@@ -67,11 +63,14 @@ Lorsque vous développez une application reposant sur le rendu côté serveur, i
 
 **server.js**
 
-```js{17-20}
+```js{15-18}
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import express from 'express'
-import {createServer as createViteServer} from 'vite'
+import { createServer as createViteServer } from 'vite'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function createServer() {
   const app = express()
@@ -218,20 +217,14 @@ Si les routes et les données requises pour certaines routes sont connues à l'a
 
 ## Externalisation
 
-De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation au format CommonJS peut être «externalisée» de la transformation et du système de modules du rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d'ensuite la re-transformer pour qu'elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
+Dependencies are "externalized" from Vite's SSR transform module system by default when running SSR. This speeds up both dev and build.
 
-Vite réalise l'externalisation du rendu côté serveur automatiquement selon les heuristiques suivantes:
+If a dependency needs to be transformed by Vite's pipeline, for example, because Vite features are used untranspiled in them, they can be added to [`ssr.noExternal`](../config/ssr-options.md#ssr-noexternal).
 
-- Si le point d'entrée de module ES résolu et son point d'entrée par défaut pour Node sont différents, le point d'entrée pour Node est probablement une compilation CommonJS qui peut être externalisé. Par exemple, `vue` sera externalisé automatiquement car il fournit à la fois une compilation en module ES et une compilation en CommonJS.
+For linked dependencies, they are not externalized by default to take advantage of Vite's HMR. If this isn't desired, for example, to test dependencies as if they aren't linked, you can add it to [`ssr.external`](../config/ssr-options.md#ssr-external).
 
-- Sinon, Vite regardera si le point d'entrée du package contient de la syntaxe de modules ES valide —si ce n'est pas le cas, le package est probablement au format CommonJS et sera externalisé. Par exemple, `react-dom` sera externalisé automatiquement car il ne spécifie qu'une entrée et qu'elle est au format CommonJS.
-
-Si les heuristiques mènent à des erreurs, vous pouvez ajuster manuellement l'externalisation du rendu côté serveur à l'aide des options de configuration `ssr.external` et `ssr.noExternal`.
-
-Dans le futur, ces heuristiques seront sans doute améliorées et vérifieront si le projet a le `type: "module"` d'activé, afin que Vite puisse aussi externaliser les dépendances qui fournissent des compilation ESM compatibles avec Node en les important avec des `import()` dynamiques pendant le rendu côté serveur.
-
-:::warning Gérer les alias
-Si vous avez configuré des alias qui redirigent un package vers un autre, vous devriez sûrement plutôt faire des alias des véritables packages `node_modules` afin que cela fonctionne aussi pour les dépendances externalisées pour le rendu côté serveur. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) et [pnpm](https://pnpm.js.org/en/aliases) supportent tous deux les alias via le préfixe `npm:`.
+:::warning Working with Aliases
+If you have configured aliases that redirect one package to another, you may want to alias the actual `node_modules` packages instead to make it work for SSR externalized dependencies. Both [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) and [pnpm](https://pnpm.js.org/en/aliases) support aliasing via the `npm:` prefix.
 :::
 
 ## Logique de plugin spécifique au rendu côté serveur
@@ -281,3 +274,7 @@ Les commandes `$ vite dev` et `$ vite preview` peuvent aussi être utilisées po
 :::tip Note
 Utilisez un hook post pour que votre middleware de rendu côté serveur s'exécute _après_ les middlewares de Vite.
 :::
+
+## SSR Format
+
+By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and CommonJS remains available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://v2.vitejs.dev/guide/ssr.html#ssr-externals).
