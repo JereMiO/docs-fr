@@ -25,13 +25,13 @@ hero:
 features:
   - icon: 💡
     title: Démarrage instantané du serveur
-    details: Les fichiers sont servis instantanément sous la forme de modules ESM! Il n’y a pas besoin de compiler.
+    details: Les fichiers sont servis instantanément sous la forme de modules ESM! Il n'y a pas besoin de compiler.
   - icon: ⚡️
     title: Rafraîchissement des modules ultra rapide
-    details: Pendant le développement, les modules sont remplacés rapidement peu importe la taille de l’app.
+    details: Pendant le développement, les modules sont remplacés rapidement peu importe la taille de l'app.
   - icon: 🛠️
     title: Riche en fonctionnalités
-    details: Support inclus pour Typescript, JSX, CSS, et bien d’autres.
+    details: Support inclus pour Typescript, JSX, CSS, et bien d'autres.
   - icon: 📦
     title: Compilation optimisée
     details: La compilation se fait grâce à Rollup, pré-configuré et avec le support du multi-page et du mode librairie.
@@ -41,5 +41,5 @@ features:
   - icon: 🔑
     title: APIs typées
     details: APIs programmatiques flexibles avec définition TypeScript de tous les types.
-footer: Licence MIT | Copyright © 2019-aujourd’hui Evan You & les contributeurs à Vite
+footer: Licence MIT | Copyright © 2019-aujourd'hui Evan You & les contributeurs à Vite
 ---

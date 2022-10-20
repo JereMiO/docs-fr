@@ -1,23 +1,23 @@
 # API JavaScript
 
-Les APIs JavaScript de Vite sont complétement typées, et il est recommandé d’utiliser TypeScript ou d’activer la vérification des types JS dans VSCode pour profiter d’IntelliSense et de la validation.
+Les APIs JavaScript de Vite sont complétement typées, et il est recommandé d'utiliser TypeScript ou d'activer la vérification des types JS dans VSCode pour profiter d'IntelliSense et de la validation.
 
 ## `createServer`
 
-**Signature de type:**
+**Signature de type :**
 
 ```ts
 async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 ```
 
-**Exemple d’utilisation:**
+**Exemple d'utilisation:**
 
 ```js
 const { createServer } = require('vite')
 
 ;(async () => {
   const server = await createServer({
-    // n’importe quelles options de configuration valides, ainsi que `mode` et
+    // n'importe quelles options de configuration valides, ainsi que `mode` et
     // `configFile`
     configFile: false,
     root: __dirname,
@@ -33,9 +33,9 @@ const { createServer } = require('vite')
 
 ## `InlineConfig`
 
-L’interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires:
+L'interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires:
 
-- `configFile`: spécifie le fichier de configuration à utiliser. S’il n’est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
+- `configFile`: spécifie le fichier de configuration à utiliser. S'il n'est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
 - `envFile`: définissez-la à `false` pour désactiver la prise en charge des fichiers `.env`.
 
 ## `ViteDevServer`
@@ -43,15 +43,15 @@ L’interface `InlineConfig` étend `UserConfig` avec des propriétés suppléme
 ```ts
 interface ViteDevServer {
   /**
-   * L’objet de configuration Vite résolu.
+   * L'objet de configuration Vite résolu.
    */
   config: ResolvedConfig
   /**
-   * Une instance d’application connect,
+   * Une instance d'application connect,
    * - peut être utilisée pour attacher des middlewares custom au serveur de
    *   développement.
-   * - peut aussi être utilisée comme fonction handler d’un serveur HTTP custom
-   *   ou comme middleware d’un framework Node.js de style connect.
+   * - peut aussi être utilisée comme fonction handler d'un serveur HTTP custom
+   *   ou comme middleware d'un framework Node.js de style connect.
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
@@ -76,8 +76,8 @@ interface ViteDevServer {
    */
   pluginContainer: PluginContainer
   /**
-   * Le graphe des modules stockant les relations d’import, les correspondances
-   * entre URLs et fichiers, et l’état du remplacement des modules à la volée.
+   * Le graphe des modules stockant les relations d'import, les correspondances
+   * entre URLs et fichiers, et l'état du remplacement des modules à la volée.
    */
   moduleGraph: ModuleGraph
   /**
@@ -117,8 +117,8 @@ interface ViteDevServer {
   /**
    * Relancer le serveur.
    *
-   * @param forceOptimize - force l’optimisateur à refaire le bundling, à la
-   * façon du signal --force de l’interface en ligne de commande
+   * @param forceOptimize - force l'optimisateur à refaire le bundling, à la
+   * façon du signal --force de l'interface en ligne de commande
    */
   restart(forceOptimize?: boolean): Promise<void>
   /**
@@ -138,7 +138,7 @@ async function build(
 ): Promise<RollupOutput | RollupOutput[]>
 ```
 
-**Exemple d’utilisation:**
+**Exemple d'utilisation:**
 
 ```js
 const path = require('path')
@@ -167,14 +167,14 @@ const { build } = require('vite')
 async function preview(inlineConfig?: InlineConfig): Promise<PreviewServer>
 ```
 
-**Exemple d’utilisation:**
+**Exemple d'utilisation:**
 
 ```js
 const { preview } = require('vite')
 
 ;(async () => {
   const previewServer = await preview({
-    // n’importe quelles options de configuration valides, ainsi que `mode` et
+    // n'importe quelles options de configuration valides, ainsi que `mode` et
     // `configFile`
     preview: {
       port: 8080,
@@ -198,7 +198,7 @@ async function resolveConfig(
 ): Promise<ResolvedConfig>
 ```
 
-La valeur de `command` est `serve` en développement (dans l’interface en ligne de commande, `vite`, `vite dev`, et `vite serve` sont des alias).
+La valeur de `command` est `serve` en développement (dans l'interface en ligne de commande, `vite`, `vite dev`, et `vite serve` sont des alias).
 
 ## `transformWithEsbuild`
 

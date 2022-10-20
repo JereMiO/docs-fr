@@ -1,12 +1,12 @@
 # HMR API
 
 :::tip Note
-Il s’agit ici de l’API de rafraîchissement des modules à la volée cliente. Pour gérer les rafraîchissements à l’aide d’un plugin, voir [handleHotUpdate](./api-plugin#handlehotupdate).
+Il s'agit ici de l'API de rafraîchissement des modules à la volée cliente. Pour gérer les rafraîchissements à l'aide d'un plugin, voir [handleHotUpdate](./api-plugin#handlehotupdate).
 
-L’API de remplacement des modules est surtout faite pour les développeurs de frameworks ou d’outils. En tant qu’utilisateur final, le rafraîchissement est normalement géré pour vous dans les templates de démarrage spécifiques aux frameworks.
+L'API de remplacement des modules est surtout faite pour les développeurs de frameworks ou d'outils. En tant qu'utilisateur final, le rafraîchissement est normalement géré pour vous dans les templates de démarrage spécifiques aux frameworks.
 :::
 
-Vite expose son API de remplacement des modules à la volée à l’aide de l’objet spécial `import.meta.hot`:
+Vite expose son API de remplacement des modules à la volée à l'aide de l'objet spécial `import.meta.hot`:
 
 ```ts
 interface ImportMeta {
@@ -43,7 +43,7 @@ interface ViteHotContext {
 
 ## Gardes conditionnels requis
 
-D’abord, assurez-vous de mettre en place des gardes à l’utilisation de l’API de rafraîchissement à la volée avec un bloc conditionnel afin que le code inutile puisse être éliminé en production (_tree-shaking_):
+D'abord, assurez-vous de mettre en place des gardes à l'utilisation de l'API de rafraîchissement à la volée avec un bloc conditionnel afin que le code inutile puisse être éliminé en production (_tree-shaking_):
 
 ```js
 if (import.meta.hot) {
@@ -53,7 +53,7 @@ if (import.meta.hot) {
 
 ## `hot.accept(cb)`
 
-Pour qu’un module s’auto-accepte, utilisez `import.meta.hot.accept` avec un callback qui reçoit le module mis à jour:
+Pour qu'un module s'auto-accepte, utilisez `import.meta.hot.accept` avec un callback qui reçoit le module mis à jour:
 
 ```js
 export const count = 1
@@ -70,13 +70,13 @@ if (import.meta.hot) {
 
 Un module qui «accepte» les rafraîchissements à la volée est une **frontière de rafraîchissement à la volée (_HMR boundary_)**.
 
-Notez que le rafraîchissement de Vite ne remplace pas vraiment le module importé à l’origine: si un module frontière de rafraîchissement ré-exporte un import d’une dépendance, alors il est responsable de la mise à jour de ces ré-exports (et ces exports doivent utiliser `let`). Les importeurs en amont du module frontière ne seront pas notifiés du changement.
+Notez que le rafraîchissement de Vite ne remplace pas vraiment le module importé à l'origine: si un module frontière de rafraîchissement ré-exporte un import d'une dépendance, alors il est responsable de la mise à jour de ces ré-exports (et ces exports doivent utiliser `let`). Les importeurs en amont du module frontière ne seront pas notifiés du changement.
 
-Cette implémentation simplifiée du remplacement de modules à la volée est suffisante pour la plupart des cas d’usage en développement, et nous permet d’éviter la coûteuse génération des modules proxy.
+Cette implémentation simplifiée du remplacement de modules à la volée est suffisante pour la plupart des cas d'usage en développement, et nous permet d'éviter la coûteuse génération des modules proxy.
 
 ## `hot.accept(deps, cb)`
 
-Un module peut aussi accepter une mise à jour d’une dépendance directe sans se recharger:
+Un module peut aussi accepter une mise à jour d'une dépendance directe sans se recharger:
 
 ```js
 import { foo } from './foo.js'
@@ -101,7 +101,7 @@ if (import.meta.hot) {
 
 ## `hot.dispose(cb)`
 
-Un module auto-accepté ou un module qui s’attend à être accepté par d’autres peut utiliser `hot.dispose` pour nettoyer les effets secondaires persistants créés par sa copie mise à jour:
+Un module auto-accepté ou un module qui s'attend à être accepté par d'autres peut utiliser `hot.dispose` pour nettoyer les effets secondaires persistants créés par sa copie mise à jour:
 
 ```js
 function setupSideEffect() {}
@@ -117,11 +117,11 @@ if (import.meta.hot) {
 
 ## `hot.data`
 
-L’objet `import.meta.hot.data` est persisté entre les différentes instances d’un même module mis à jour. Il peut être utilisé pour passer des informations depuis une version précédente du module vers la suivante.
+L'objet `import.meta.hot.data` est persisté entre les différentes instances d'un même module mis à jour. Il peut être utilisé pour passer des informations depuis une version précédente du module vers la suivante.
 
 ## `hot.decline()`
 
-Appeler `import.meta.hot.decline()` indique que ce module n’est pas remplaçable à la volée, et que le navigateur doit recharger complétement la page si ce module est rencontré pendant la propagation des mises à jour de modules.
+Appeler `import.meta.hot.decline()` indique que ce module n'est pas remplaçable à la volée, et que le navigateur doit recharger complétement la page si ce module est rencontré pendant la propagation des mises à jour de modules.
 
 ## `hot.invalidate()`
 
@@ -144,9 +144,9 @@ import.meta.hot.accept((module) => {
 
 Les évènements de remplacement suivants sont émis par Vite automatiquement:
 
-- `'vite:beforeUpdate'` quand une mise à jour est sur le point d’être appliquée (par exemple lorsqu’un module va être remplacé)
-- `'vite:beforeFullReload'` quand un rechargement complet est sur le point d’avoir lieu
-- `'vite:beforePrune'` quand des modules qui ne sont plus nécessaires sont sur le point d’être élagués
+- `'vite:beforeUpdate'` quand une mise à jour est sur le point d'être appliquée (par exemple lorsqu'un module va être remplacé)
+- `'vite:beforeFullReload'` quand un rechargement complet est sur le point d'avoir lieu
+- `'vite:beforePrune'` quand des modules qui ne sont plus nécessaires sont sur le point d'être élagués
 - `'vite:error'` quand une erreur survient (par exemple une erreur de syntaxe)
 
 Des évènements de remplacement à la volée custom peuvent aussi être émis par les plugins. Voir [handleHotUpdate](./api-plugin#handlehotupdate) pour plus de détails.

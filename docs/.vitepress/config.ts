@@ -266,11 +266,11 @@ export default defineConfig({
               link: '/config/build-options'
             },
             {
-              text: 'Options de l’aperçu (preview)',
+              text: 'Options de l\'aperçu (preview)',
               link: '/config/preview-options'
             },
             {
-              text: 'Options d’optimisation des dépendances',
+              text: 'Options d\'optimisation des dépendances',
               link: '/config/dep-optimization-options'
             },
             {

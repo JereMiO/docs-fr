@@ -45,7 +45,7 @@ Go to [vitejs.dev](https://vitejs.dev) to enjoy the new v3 docs. Vite is now usi
 
 Several projects in the ecosystem have already migrated to it (see [Vitest](https://vitest.dev), [vite-plugin-pwa](https://vite-plugin-pwa.netlify.app/), and [VitePress](https://vitepress.vuejs.org/) itself).
 
-If you need to access the Vite 2 docs, they will remain online at [v2.vitejs.dev](https://v2.vitejs.dev). There is also a new [main.vitejs.dev](https://main.vitejs.dev) subdomain, where each commit to Vite’s main branch is auto deployed. This is useful when testing beta versions or contributing to the core’s development.
+If you need to access the Vite 2 docs, they will remain online at [v2.vitejs.dev](https://v2.vitejs.dev). There is also a new [main.vitejs.dev](https://main.vitejs.dev) subdomain, where each commit to Vite's main branch is auto deployed. This is useful when testing beta versions or contributing to the core's development.
 
 There is also now an official Spanish translation, that has been added to the previous Chinese and Japanese translations:
 
@@ -108,7 +108,7 @@ The theme is now shared by all templates. This should help better convey the sco
   <span style="color:green"><b>➜</b></span>  <span style="color:gray"><b>Network</b>: use --host to expose</span>
 </pre>
 
-Apart from the CLI’s aesthetics improvements, you’ll notice that the default dev server port is now 5173 and the preview server listening at 4173. This change ensures Vite will avoid collisions with other tools.
+Apart from the CLI's aesthetics improvements, you'll notice that the default dev server port is now 5173 and the preview server listening at 4173. This change ensures Vite will avoid collisions with other tools.
 
 ### Improved WebSocket Connection Strategy
 

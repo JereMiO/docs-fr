@@ -23,13 +23,13 @@
 - 🔩 Interface de plugins universelle
 - 🔑 APIs typées
 
-Vite (prononcé comme en français) est un outil de compilation frontend d’un nouveau genre qui améliore grandement l’expérience de développement. Il se compose de deux parties:
+Vite (prononcé comme en français) est un outil de compilation frontend d'un nouveau genre qui améliore grandement l'expérience de développement. Il se compose de deux parties:
 
 - Un serveur de développement qui sert les fichiers sous la forme de [modules ECMAScript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules), qui propose de [nombreuses fonctionnalités](https://vitejs.dev/guide/features.html) et qui permet un [rafraîchissement des modules (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement) très rapide.
 
-- Une [commande de compilation](https://vitejs.dev/guide/build.html) qui bundle votre code à l’aide de [Rollup](https://rollupjs.org), pré-configuré pour optimiser grandement la taille des ressources statiques en production.
+- Une [commande de compilation](https://vitejs.dev/guide/build.html) qui bundle votre code à l'aide de [Rollup](https://rollupjs.org), pré-configuré pour optimiser grandement la taille des ressources statiques en production.
 
-En plus, Vite peut être étendu grâce à son [API pour plugin](https://vitejs.dev/guide/api-plugin.html) ainsi que l’[API JavaScript](https://vitejs.dev/guide/api-javascript.html) typée.
+En plus, Vite peut être étendu grâce à son [API pour plugin](https://vitejs.dev/guide/api-plugin.html) ainsi que l'[API JavaScript](https://vitejs.dev/guide/api-javascript.html) typée.
 
 ## Contribution
 

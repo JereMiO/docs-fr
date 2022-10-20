@@ -1,6 +1,6 @@
 # Compilation en production
 
-Lorsqu’il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d’entrée pour la compilation, et produit un bundle d’application qu’il est possible de servir avec un service d’hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
+Lorsqu'il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d'entrée pour la compilation, et produit un bundle d'application qu'il est possible de servir avec un service d'hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
 
 ## Compatibilité navigateur
 
@@ -11,17 +11,17 @@ Ce bundle de production part du principe que le JavaScript moderne est supporté
 - Safari >=13
 - Edge >=88
 
-Vous pouvez spécifier des cibles personnalisées à l’aide de l’[option de configuration `build.target`](/config/#build-target), sachant que la cible minimum est `es2015`.
+Vous pouvez spécifier des cibles personnalisées à l'aide de l'[option de configuration `build.target`](/config/#build-target), sachant que la cible minimum est `es2015`.
 
-Notez que par défaut, Vite ne s’occupe que des transformations de syntaxe et **n’insère pas de polyfill**. Regardez du côté de [Polyfill.io](https://polyfill.io/v3/) qui est un service qui génère automatiquement des bundles de polyfills en se basant sur la chaîne de caractères de l’agent utilisateur.
+Notez que par défaut, Vite ne s'occupe que des transformations de syntaxe et **n'insère pas de polyfill**. Regardez du côté de [Polyfill.io](https://polyfill.io/v3/) qui est un service qui génère automatiquement des bundles de polyfills en se basant sur la chaîne de caractères de l'agent utilisateur.
 
-Les navigateurs plus anciens peuvent être supportés à l’aide de [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy), qui va générer automatiquement des morceaux (_chunks_) pour navigateurs plus anciens et les polyfills de fonctionnalités du langage ES qui correspondent. Les morceaux pour navigateurs plus anciens sont chargés conditionnellement seulement dans les navigateurs qui ne supportent pas les modules ES natifs.
+Les navigateurs plus anciens peuvent être supportés à l'aide de [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy), qui va générer automatiquement des morceaux (_chunks_) pour navigateurs plus anciens et les polyfills de fonctionnalités du langage ES qui correspondent. Les morceaux pour navigateurs plus anciens sont chargés conditionnellement seulement dans les navigateurs qui ne supportent pas les modules ES natifs.
 
 ## Chemin public de base
 
 - Voir aussi: [Gestion des ressources statiques](./assets)
 
-Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l’[option de configuration `base`](/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l’interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
+Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l'[option de configuration `base`](/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l'interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
 
 Les URLs de ressources importées par le JavaScript, les références `url()` dans le CSS, et les références à des ressources dans vos fichiers `.html` sont toutes ajustées automatiquement pour respecter cette option pendant la compilation.
 
@@ -44,7 +44,7 @@ export default defineConfig({
 })
 ```
 
-Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l’aide de plugins qui ne sont appliqués que pour la compilation.
+Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l'aide de plugins qui ne sont appliqués que pour la compilation.
 
 ## Stratégie de découpage en morceaux (_chunks_)
 
@@ -75,7 +75,7 @@ export default defineConfig({
 })
 ```
 
-Avec le signal `--watch`, les changements faits à `vite.config.js` ou à n’importe quel fichier bundlé donnera lieu à une recompilation.
+Avec le signal `--watch`, les changements faits à `vite.config.js` ou à n'importe quel fichier bundlé donnera lieu à une recompilation.
 
 ## Application multi-pages
 
@@ -91,9 +91,9 @@ Supposons que votre code source a la structure suivante:
     └── nested.js
 ```
 
-Pendant la développement, naviguez à `/nested/` —cela fonctionne comme attendu, du moins dans le contexte d’un serveur de fichiers statiques.
+Pendant la développement, naviguez à `/nested/` —cela fonctionne comme attendu, du moins dans le contexte d'un serveur de fichiers statiques.
 
-Pour la compilation, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d’entrée:
+Pour la compilation, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d'entrée:
 
 ```js
 // vite.config.js
@@ -116,9 +116,9 @@ Si vous spécifiez une racine différente, souvenez-vous que `__dirname` sera to
 
 ## Mode librairie
 
-Lorsque vous développerez une librairie à destination du navigateur, vous passerez sûrement une bonne partie de votre temps sur une page de démo ou de test qui importe votre librairie. Avec Vite, vous pouvez utiliser le `index.html` pour cela, et profiter d’une meilleure expérience de développement.
+Lorsque vous développerez une librairie à destination du navigateur, vous passerez sûrement une bonne partie de votre temps sur une page de démo ou de test qui importe votre librairie. Avec Vite, vous pouvez utiliser le `index.html` pour cela, et profiter d'une meilleure expérience de développement.
 
-Lorsqu’il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l’[option de configuration `build.lib`](/config/#build-lib). Assurez vous d’externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple:
+Lorsqu'il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l'[option de configuration `build.lib`](/config/#build-lib). Assurez vous d'externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple:
 
 
 ```js
@@ -151,7 +151,7 @@ export default defineConfig({
 })
 ```
 
-Le fichier d’entrée doit contenir les exports qui seront importés par les utilisateurs de votre package:
+Le fichier d'entrée doit contenir les exports qui seront importés par les utilisateurs de votre package:
 
 ```js
 // lib/main.js
@@ -220,13 +220,13 @@ In library mode, all `import.meta.env.*` usage are statically replaced when buil
 ## Options avancées du chemin de base
 
 ::: warning
-Cette fonctionnalité est expérimentale; l’API pourra très bien changer dans une future version mineure sans suivre le SemVer. Fixez la version mineure de Vite si vous l’utilisez.
+Cette fonctionnalité est expérimentale; l'API pourra très bien changer dans une future version mineure sans suivre le SemVer. Fixez la version mineure de Vite si vous l'utilisez.
 :::
 
 For advanced use cases, the deployed assets and public files may be in different paths, for example to use different cache strategies.
 A user may choose to deploy in three different paths:
 
-- Les fichiers HTML d’entrée générés (qui peuvent aussi être traités par le rendu côté serveur)
+- Les fichiers HTML d'entrée générés (qui peuvent aussi être traités par le rendu côté serveur)
 - Les ressources hachées générées (JS, CSS, et les autres types de fichier comme les images)
 - Les [fichiers publics](assets.md#le-repertoire-public) copiés
 

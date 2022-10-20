@@ -1,23 +1,23 @@
 # API pour plugin
 
-Les plugins Vite étendent la très bonne interface pour plugin de Rollup avec quelques options spécifiques à Vite. L’intérêt est que vous pouvez créer un seul plugin et qu’il fonctionnera à la fois en développement et pour la compilation.
+Les plugins Vite étendent la très bonne interface pour plugin de Rollup avec quelques options spécifiques à Vite. L'intérêt est que vous pouvez créer un seul plugin et qu'il fonctionnera à la fois en développement et pour la compilation.
 
 **Il est recommandé de lire [la documentation des plugins Rollup](https://rollupjs.org/guide/en/#plugin-development) (en anglais) avant ce qui suit.**
 
 ## Créer un plugin
 
-Vite s’efforce de permettre l’utilisation des patterns les plus courants sans qu’il n’y ait besoin de plugin, alors avant d’en faire un nouveau assurez-vous d’avoir bien lu le [guide des fonctionnalités](/guide/features.md) pour savoir si votre besoin n’est pas déjà couvert. Vérifiez aussi parmis les plugins de la communauté, à la fois sous la forme de [plugins Rollup compatibles](https://github.com/rollup/awesome) ou de [plugins spécifiques à Vite](https://github.com/vitejs/awesome-vite#plugins).
+Vite s'efforce de permettre l'utilisation des patterns les plus courants sans qu'il n'y ait besoin de plugin, alors avant d'en faire un nouveau assurez-vous d'avoir bien lu le [guide des fonctionnalités](/guide/features.md) pour savoir si votre besoin n'est pas déjà couvert. Vérifiez aussi parmis les plugins de la communauté, à la fois sous la forme de [plugins Rollup compatibles](https://github.com/rollup/awesome) ou de [plugins spécifiques à Vite](https://github.com/vitejs/awesome-vite#plugins).
 
-Lorsque vous créez un plugin, vous pouvez le mettre inline dans votre `vite.config.js`. Il n’y a pas spécialement besoin de créer un nouveau package. Une fois que vous constatez qu’un plugin a été utile pour l’un de vos projets, vous pouvez envisager de le partager pour aider d’autres personnes [dans l’écosystème](https://chat.vitejs.dev).
+Lorsque vous créez un plugin, vous pouvez le mettre inline dans votre `vite.config.js`. Il n'y a pas spécialement besoin de créer un nouveau package. Une fois que vous constatez qu'un plugin a été utile pour l'un de vos projets, vous pouvez envisager de le partager pour aider d'autres personnes [dans l'écosystème](https://chat.vitejs.dev).
 
 ::: tip
-Si vous apprenez, débuggez, ou écrivez des plugins nous recommandons d’inclure [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) à votre projet. Il vous permet d’inspecter les états intermédiaires des plugins Vite. Après l’avoir installé, vous pouvez aller voir `localhost:3000/__inspect/` pour inspecter les modules et les transformations de votre projet. Les instructions d’installation se trouvent dans la [documentation de vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect).
+Si vous apprenez, débuggez, ou écrivez des plugins nous recommandons d'inclure [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) à votre projet. Il vous permet d'inspecter les états intermédiaires des plugins Vite. Après l'avoir installé, vous pouvez aller voir `localhost:3000/__inspect/` pour inspecter les modules et les transformations de votre projet. Les instructions d'installation se trouvent dans la [documentation de vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect).
 ![vite-plugin-inspect](/images/vite-plugin-inspect.png)
 :::
 
 ## Conventions
 
-Si le plugin n’utilise pas de hook spécifique à Vite et peut être implémenté en tant que [plugin Rollup compatible](#compatibilite-des-plugins-rollup), alors il est recommandé d’utiliser les [conventions de nommage des plugins Rollup](https://rollupjs.org/guide/en/#conventions):
+Si le plugin n'utilise pas de hook spécifique à Vite et peut être implémenté en tant que [plugin Rollup compatible](#compatibilite-des-plugins-rollup), alors il est recommandé d'utiliser les [conventions de nommage des plugins Rollup](https://rollupjs.org/guide/en/#conventions):
 
 - Les plugins doivent avoir un nom clair avec un préfixe `rollup-plugin-`.
 - Les `keywords` du package.json doivent inclure `rollup-plugin` et `vite-plugin`.
@@ -28,9 +28,9 @@ Pour les plugins uniquement compatibles avec Vite:
 
 - Les plugins doivent avoir un nom clair avec un préfixe `vite-plugin-`.
 - Les `keywords` du package.json doivent inclure `vite-plugin`.
-- La documentation du plugin doit inclure une section expliquant pourquoi le plugin est uniquement compatible avec Vite (par exemple, parce qu’il utilise un hook spécifique à Vite).
+- La documentation du plugin doit inclure une section expliquant pourquoi le plugin est uniquement compatible avec Vite (par exemple, parce qu'il utilise un hook spécifique à Vite).
 
-Si votre plugin ne fonctionne qu’avec un framework en particulier, son nom doit faire partie du préfixe:
+Si votre plugin ne fonctionne qu'avec un framework en particulier, son nom doit faire partie du préfixe:
 
 - `vite-plugin-vue-` pour les plugins Vue
 - `vite-plugin-react-` pour les plugins React
@@ -40,7 +40,7 @@ Voir aussi la [convention pour les modules virtuels](#convention-pour-les-module
 
 ## Configuration des plugins
 
-Les utilisateurs ajouteront les plugins aux `devDependencies` du projet et les configureront en utilisant l’option `plugins`.
+Les utilisateurs ajouteront les plugins aux `devDependencies` du projet et les configureront en utilisant l'option `plugins`.
 
 ```js
 // vite.config.js
@@ -54,7 +54,7 @@ export default defineConfig({
 
 Les plugins falsy seront ignorés, ce qui peut être utilisé pour activer ou désactiver des plugins.
 
-`plugins` accepte aussi des presets tels que plusieurs plugins dans un seul élément. C’est pratique lorsque des fonctionnalités complexes (comme l’intégration d’un framework) sont implémentées à l’aide de plusieurs plugins. La liste sera aplatie par Vite.
+`plugins` accepte aussi des presets tels que plusieurs plugins dans un seul élément. C'est pratique lorsque des fonctionnalités complexes (comme l'intégration d'un framework) sont implémentées à l'aide de plusieurs plugins. La liste sera aplatie par Vite.
 
 ```js
 // framework-plugin
@@ -79,7 +79,7 @@ export default defineConfig({
 ## Exemples simples
 
 :::tip
-C’est une convention répandue de créer des plugins Vite/Rollup à l’aide d’une fonction fabrique (_factory_) qui retourne l’objet plugin. La fonction peut accepter des options qui permettent aux utilisateurs de configurer le comportement du plugin.
+C'est une convention répandue de créer des plugins Vite/Rollup à l'aide d'une fonction fabrique (_factory_) qui retourne l'objet plugin. La fonction peut accepter des options qui permettent aux utilisateurs de configurer le comportement du plugin.
 :::
 
 ### Transformer les types de fichiers custom
@@ -105,11 +105,11 @@ export default function myPlugin() {
 
 ### Importer un fichier virtuel
 
-Voir l’exemple de la [section suivante](#convention-pour-les-modules-virtuels).
+Voir l'exemple de la [section suivante](#convention-pour-les-modules-virtuels).
 
 ## Convention pour les modules virtuels
 
-Les modules virtuels sont un procédé utile qui permet de passer des informations aux fichiers source au moment de la compilation avec une syntaxe d’import de module ES normale.
+Les modules virtuels sont un procédé utile qui permet de passer des informations aux fichiers source au moment de la compilation avec une syntaxe d'import de module ES normale.
 
 ```js
 export default function myPlugin() {
@@ -132,7 +132,7 @@ export default function myPlugin() {
 }
 ```
 
-Ce qui permet d’importer le module en JavaScript:
+Ce qui permet d'importer le module en JavaScript:
 
 ```js
 import { msg } from 'virtual:my-module'
@@ -140,9 +140,9 @@ import { msg } from 'virtual:my-module'
 console.log(msg)
 ```
 
-La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l’utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d’entrer en conflit avec les autres plugins de l’écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d’importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment de la compilation. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l’identifiant par `\0` lorsqu’ils résolvent l’identifiant (c’est une convention de l’écosystème Rollup). Cela évite que d’autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n’est pas un caractère autorisé dans les URLs d’import alors nous devons le remplacer pendant l’analyse de l’import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d’entrer dans la pipeline de plugins, alors cette mécanique n’est pas visible par les hooks de plugins.
+La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l'utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d'entrer en conflit avec les autres plugins de l'écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d'importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment de la compilation. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l'identifiant par `\0` lorsqu'ils résolvent l'identifiant (c'est une convention de l'écosystème Rollup). Cela évite que d'autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n'est pas un caractère autorisé dans les URLs d'import alors nous devons le remplacer pendant l'analyse de l'import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d'entrer dans la pipeline de plugins, alors cette mécanique n'est pas visible par les hooks de plugins.
 
-Notez que les modules directement tirés d’un vrai fichier, comme c’est le cas d’un module de script dans un composant à fichier unique (_SFC_) (un composant à fichier unique .vue ou .svelte par exemple) n’ont pas besoin de suivre cette convention. Les composants à fichier unique génèrent en général une série de sous-modules lorsqu’ils sont traités mais le code de ceux-ci peut-être relié au système de fichiers. Utiliser `\0` pour ces sous-modules empêcherait les sourcemaps de fonctionner correctement.
+Notez que les modules directement tirés d'un vrai fichier, comme c'est le cas d'un module de script dans un composant à fichier unique (_SFC_) (un composant à fichier unique .vue ou .svelte par exemple) n'ont pas besoin de suivre cette convention. Les composants à fichier unique génèrent en général une série de sous-modules lorsqu'ils sont traités mais le code de ceux-ci peut-être relié au système de fichiers. Utiliser `\0` pour ces sous-modules empêcherait les sourcemaps de fonctionner correctement.
 
 ## Hooks universels
 
@@ -164,9 +164,9 @@ Les hooks suivants sont appelés quand le serveur se ferme:
 - [`buildEnd`](https://rollupjs.org/guide/en/#buildend)
 - [`closeBundle`](https://rollupjs.org/guide/en/#closebundle)
 
-Notez que le [hook `moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed) n’est **pas** appelé pendant le développement, parce que Vite évite de parser lorsque cela requiert tout un arbre de la syntaxe abstraite (_AST_) pour des raisons de performance.
+Notez que le [hook `moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed) n'est **pas** appelé pendant le développement, parce que Vite évite de parser lorsque cela requiert tout un arbre de la syntaxe abstraite (_AST_) pour des raisons de performance.
 
-Les [hooks de génération de l’output](https://rollupjs.org/guide/en/#output-generation-hooks) (sauf `closeBundle`) ne sont **pas** appelés durant le développement. Vous pouvez partir du principe que le serveur de développement de Vite appelle seulement `rollup.rollup()` et pas `bundle.generate()`.
+Les [hooks de génération de l'output](https://rollupjs.org/guide/en/#output-generation-hooks) (sauf `closeBundle`) ne sont **pas** appelés durant le développement. Vous pouvez partir du principe que le serveur de développement de Vite appelle seulement `rollup.rollup()` et pas `bundle.generate()`.
 
 ## Hooks spécifiques à Vite
 
@@ -177,7 +177,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 - **Type:** `(config: UserConfig, env: { mode: string, command: string }) => UserConfig | null | void`
 - **Kind:** `async`, `sequential`
 
-  Modifie la configuration de Vite avant qu’elle ne soit résolue. Le hook reçoit la configuration brute de l’utilisateur (les options de l’interface en ligne de commande fusionnées avec le fichier de configuration) et l’environnement de configuration courant qui expose le `mode` et la `command`. Il peut retourner un objet de configuration incomplet qui sera fusionné avec la configuration existante, ou directement muter la configuration (si la fusion par défaut ne permet pas d’atteindre le résultat souhaité).
+  Modifie la configuration de Vite avant qu'elle ne soit résolue. Le hook reçoit la configuration brute de l'utilisateur (les options de l'interface en ligne de commande fusionnées avec le fichier de configuration) et l'environnement de configuration courant qui expose le `mode` et la `command`. Il peut retourner un objet de configuration incomplet qui sera fusionné avec la configuration existante, ou directement muter la configuration (si la fusion par défaut ne permet pas d'atteindre le résultat souhaité).
 
   **Exemple:**
 
@@ -242,7 +242,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   }
   ```
 
-  Notez que la valeur de `command` est `serve` en développement (sur l’interface en ligne de commande `vite`, `vite dev` et `vite serve` sont des alias).
+  Notez que la valeur de `command` est `serve` en développement (sur l'interface en ligne de commande `vite`, `vite dev` et `vite serve` sont des alias).
 
 ### `configureServer`
 
@@ -265,7 +265,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
   **Injecter des middlewares après-coup**
 
-  Le hook `configureServer` est appelé avant que les middlewares internes ne soient installés, alors les middlewares spécifiques s’exécuteront avant les middlewares internes par défaut. Si vous voulez injecter un middleware **après** les middlewares internes, vous pouvez retourner une fonction dans `configureServer`, qui sera appelée après que les middlewares internes soient installés:
+  Le hook `configureServer` est appelé avant que les middlewares internes ne soient installés, alors les middlewares spécifiques s'exécuteront avant les middlewares internes par défaut. Si vous voulez injecter un middleware **après** les middlewares internes, vous pouvez retourner une fonction dans `configureServer`, qui sera appelée après que les middlewares internes soient installés:
 
   ```js
   const myPlugin = () => ({
@@ -282,9 +282,9 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   })
   ```
 
-  **Stocker l’accès au serveur**
+  **Stocker l'accès au serveur**
 
-  Dans certaines cas, d’autres hooks de plugins peuvent avoir besoin d’accéder à l’instance du serveur de développement (par exemple pour accéder au serveur web socket, au watcher du système de fichiers, ou au graphe des modules). Ce hook peut aussi être utilisé pour stocker l’instance du serveur et s’en servir dans d’autres hooks:
+  Dans certaines cas, d'autres hooks de plugins peuvent avoir besoin d'accéder à l'instance du serveur de développement (par exemple pour accéder au serveur web socket, au watcher du système de fichiers, ou au graphe des modules). Ce hook peut aussi être utilisé pour stocker l'instance du serveur et s'en servir dans d'autres hooks:
 
   ```js
   const myPlugin = () => {
@@ -332,12 +332,12 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 - **Type:** `IndexHtmlTransformHook | { enforce?: 'pre' | 'post', transform: IndexHtmlTransformHook }`
 - **Kind:** `async`, `sequential`
 
-  Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d’une chaîne de caractères et un contexte de transformation. Le contexte expose l’instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant la compilation.
+  Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d'une chaîne de caractères et un contexte de transformation. Le contexte expose l'instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant la compilation.
 
   Le hook peut être asynchrone et retourne un des formats suivants:
 
   - Chaîne de caractères HTML transformée.
-  - Une liste d’objets décrivant des éléments (`{ balise, attributs, enfants }`) à injecter dans le HTML existant. Chaque élément peut aussi spécifier où il doit être injecté (par défaut il est ajouté à la fin de `<head>`).
+  - Une liste d'objets décrivant des éléments (`{ balise, attributs, enfants }`) à injecter dans le HTML existant. Chaque élément peut aussi spécifier où il doit être injecté (par défaut il est ajouté à la fin de `<head>`).
   - Un objet contenant les deux (`{ html, éléments }`).
 
   **Exemple basique:**
@@ -408,9 +408,9 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   }
   ```
 
-  - `modules` est une liste des modules affectés par le fichier modifié. C’est une liste car un fichier unique peut correspondre à plusieurs modules (comme les composants à fichier unique par exemple).
+  - `modules` est une liste des modules affectés par le fichier modifié. C'est une liste car un fichier unique peut correspondre à plusieurs modules (comme les composants à fichier unique par exemple).
 
-  - `read` est une fonction de lecture asynchrone qui retourne le contenu du fichier. Elle est fournie car sur certains systèmes, le callback lorsqu’un fichier est modifié peut être déclenché trop rapidement (avant que l’éditeur ne finisse de se mettre à jour) et utiliser `fs.readFile` directement retournera un contenu vide. La fonction read permet de normaliser ce comportement.
+  - `read` est une fonction de lecture asynchrone qui retourne le contenu du fichier. Elle est fournie car sur certains systèmes, le callback lorsqu'un fichier est modifié peut être déclenché trop rapidement (avant que l'éditeur ne finisse de se mettre à jour) et utiliser `fs.readFile` directement retournera un contenu vide. La fonction read permet de normaliser ce comportement.
 
   Le hook peut choisir de:
 
@@ -429,7 +429,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
     }
     ```
 
-    Le code client doit utiliser le handler correspondant à l’aide de l’[API du rafraîchissement des modules](./api-hmr) (qui peut être injecté par le hook `transform` du même plugin):
+    Le code client doit utiliser le handler correspondant à l'aide de l'[API du rafraîchissement des modules](./api-hmr) (qui peut être injecté par le hook `transform` du même plugin):
 
     ```js
     if (import.meta.hot) {
@@ -441,7 +441,7 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
 
 ## Ordre du plugin
 
-Un plugin Vite peut également spécifier une propriété `enforce` (à la manière des loaders webpack) pour ajuster son ordre dans la liste. La valeur d’`enforce` peut être soit `"pre"` soit `"post"`. Les plugins résolus seront traités dans l’ordre suivant:
+Un plugin Vite peut également spécifier une propriété `enforce` (à la manière des loaders webpack) pour ajuster son ordre dans la liste. La valeur d'`enforce` peut être soit `"pre"` soit `"post"`. Les plugins résolus seront traités dans l'ordre suivant:
 
 - Alias
 - User plugins with `enforce: 'pre'`
@@ -475,14 +475,14 @@ apply(config, { command }) {
 
 ## Compatibilité des plugins Rollup
 
-Une bonne quantité de plugins Rollup fonctionnera directement comme plugin Vite (par exemple `@rollup/plugin-alias` ou `@rollup/plugin-json`), mais pas tous, puisque certains hooks de plugin n’ont pas de sens dans le contexte d’un serveur de développement sans bundling.
+Une bonne quantité de plugins Rollup fonctionnera directement comme plugin Vite (par exemple `@rollup/plugin-alias` ou `@rollup/plugin-json`), mais pas tous, puisque certains hooks de plugin n'ont pas de sens dans le contexte d'un serveur de développement sans bundling.
 
-En général, tant qu’un plugin Rollup respecte les critères suivants il devrait fonctionner comme plugin Vite:
+En général, tant qu'un plugin Rollup respecte les critères suivants il devrait fonctionner comme plugin Vite:
 
-- Il n’utilise pas le hook [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed).
-- Sa phase de bundling et sa phase d’output sont découplées.
+- Il n'utilise pas le hook [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed).
+- Sa phase de bundling et sa phase d'output sont découplées.
 
-Si un plugin Rollup n’a de sens que pour la phase de compilation, alors il peut être spécifié sous `build.rollupOptions.plugins`.
+Si un plugin Rollup n'a de sens que pour la phase de compilation, alors il peut être spécifié sous `build.rollupOptions.plugins`.
 
 Vous pouvez aussi agrémenter un plugin Rollup existant de propriétés propres à Vite:
 
@@ -502,13 +502,13 @@ export default defineConfig({
 })
 ```
 
-Lisez la [liste des plugins Rollup compatibles avec Vite](https://vite-rollup-plugins.patak.dev) pour plus d’informations sur les plugins officiels Rollup et pour des instructions d’utilisation (en anglais).
+Lisez la [liste des plugins Rollup compatibles avec Vite](https://vite-rollup-plugins.patak.dev) pour plus d'informations sur les plugins officiels Rollup et pour des instructions d'utilisation (en anglais).
 
 ## Normalisation des chemins
 
-Vite normalise les chemins lorsqu’il résout les identifiants de manière à utiliser les séparateurs POSIX ( / ) tout en préservant le volume sur Windows. D’un autre côté, Rollup garde les chemins résolus intacts par défaut, alors les identifiants résolus ont des séparateurs win32 ( \\ ) sur Windows. Cependant, les plugins Rollup utilisent la [fonction utilitaire `normalizePath`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#normalizepath) de `@rollup/pluginutils`, qui convertit les séparateurs au format POSIX avant de faire des comparaisons. Cela signifie que lorsque ces plugins sont utilisés dans Vite, les patterns de configuration `include`, `exclude` et similaires peuvent faire de la comparaison avec les identifiants résolus.
+Vite normalise les chemins lorsqu'il résout les identifiants de manière à utiliser les séparateurs POSIX ( / ) tout en préservant le volume sur Windows. D'un autre côté, Rollup garde les chemins résolus intacts par défaut, alors les identifiants résolus ont des séparateurs win32 ( \\ ) sur Windows. Cependant, les plugins Rollup utilisent la [fonction utilitaire `normalizePath`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#normalizepath) de `@rollup/pluginutils`, qui convertit les séparateurs au format POSIX avant de faire des comparaisons. Cela signifie que lorsque ces plugins sont utilisés dans Vite, les patterns de configuration `include`, `exclude` et similaires peuvent faire de la comparaison avec les identifiants résolus.
 
-Donc les plugins Vite, lorsqu’ils comparent des chemins avec des identifiants résolus, doivent impérativement normaliser les chemins de manière à ce qu’ils utilisent des séparateurs POSIX. Une fonction utilitaire `normalizePath` équivalente est exportée par le module `vite`.
+Donc les plugins Vite, lorsqu'ils comparent des chemins avec des identifiants résolus, doivent impérativement normaliser les chemins de manière à ce qu'ils utilisent des séparateurs POSIX. Une fonction utilitaire `normalizePath` équivalente est exportée par le module `vite`.
 
 ```js
 import { normalizePath } from 'vite'
