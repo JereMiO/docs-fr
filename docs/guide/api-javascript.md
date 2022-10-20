@@ -60,7 +60,7 @@ interface ViteDevServer {
    * Instance native du serveur HTTP Node.
    * Sera null en mode middleware.
    */
-  httpServer: http.Server | null
+  httpServer: http.Server | Http2SecureServer | null
   /**
    * Instance du watcher Chokidar.
    * https://github.com/paulmillr/chokidar#api
@@ -105,6 +105,11 @@ interface ViteDevServer {
    * Corriger la stacktrace des erreurs en rendu côté serveur.
    */
   ssrFixStacktrace(e: Error): void
+  /**
+   * Triggers HMR for a module in the module graph. You can use the `server.moduleGraph`
+   * API to retrieve the module to be reloaded. If `hmr` is false, this is a no-op.
+   */
+  reloadModule(module: ModuleNode): Promise<void>
   /**
    * Démarrer le serveur.
    */
